@@ -18,7 +18,6 @@ const eventThrottler = delay => {
 };
 
 const startScript = () => {
-  console.log(new Date().toLocaleTimeString());
   let messages = document.querySelectorAll(".im_history_message_wrap");
   if (messages.length === messagesLength) return;
   if (messages.length === 0) return;
