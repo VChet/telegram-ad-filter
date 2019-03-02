@@ -19,7 +19,7 @@ const eventThrottler = delay => {
 
 const startScript = () => {
   console.log(new Date().toLocaleTimeString());
-  let messages = document.querySelectorAll(".im_message_text");
+  let messages = document.querySelectorAll(".im_history_message_wrap");
   if (messages.length === messagesLength) return;
   if (messages.length === 0) return;
   messagesLength = messages.length;
@@ -34,13 +34,14 @@ const startScript = () => {
       "#текстприслан",
     ];
     if (adWords.some(v => message.innerText.indexOf(v) >= 0 )) {
+      message = message.querySelector(".im_message_body");
       message.classList.add("advertisementMessage");
       message.onclick = () => message.classList.toggle("advertisementMessage");
     }
   });
 }
 
-GM_addStyle(".advertisementMessage {color:dodgerblue!important; font-weight:bold; text-overflow:ellipsis; max-height:20px; white-space:nowrap; overflow:hidden;}");
+GM_addStyle(".advertisementMessage {color:dodgerblue!important; max-height:40px;}");
 
 let messagesLength;
 let eventTimeout;
