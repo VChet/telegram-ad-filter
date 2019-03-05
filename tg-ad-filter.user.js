@@ -1,8 +1,10 @@
 // ==UserScript==
-// @name        Telegram Ad Skip
+// @name        Telegram Ad Filter
 // @version     0.1.0
-// @description 🤔
+// @description Minimizes messages that contain words from the filter
+// @license     MIT
 // @author      VChet
+// @namespace   Telegram-Ad-Filter
 // @include     https://web.telegram.org/*
 // @grant       GM_addStyle
 // ==/UserScript==
