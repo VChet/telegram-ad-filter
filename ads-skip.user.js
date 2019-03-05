@@ -31,7 +31,17 @@ const eventThrottler = delay => {
   }
 };
 
-GM_addStyle(".advertisementMessage {color:dodgerblue!important; max-height:40px;}");
+GM_addStyle(`
+  .advertisementMessage {
+    max-height: 40px;
+  }
+  .advertisementMessage > div:before {
+    color: dodgerblue;
+    font-weight: bold;
+    text-decoration-style: dotted;
+    content: "Advertisement";
+  }
+`);
 
 const adWords = [
   "#взаимопиар",
