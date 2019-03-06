@@ -10,6 +10,8 @@
 // @grant       GM_getValue
 // @grant       GM_setValue
 // @grant       GM_registerMenuCommand
+// @updateURL   https://raw.githubusercontent.com/VChet/Telegram-Ad-Filter/master/tg-ad-filter.user.js
+// @downloadURL https://raw.githubusercontent.com/VChet/Telegram-Ad-Filter/master/tg-ad-filter.user.js
 // ==/UserScript==
 "use strict";
 
@@ -19,7 +21,7 @@ const startScript = () => {
   messagesLength = messages.length;
   console.log({ messagesLength });
   messages.forEach(message => {
-    if (adWords.some(v => message.innerText.indexOf(v) >= 0 )) {
+    if (adWords.some(v => message.innerText.indexOf(v) >= 0)) {
       message = message.querySelector(".im_message_body");
       message.classList.add("advertisementMessage");
       message.onclick = () => message.classList.toggle("advertisementMessage");
