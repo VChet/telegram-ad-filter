@@ -15,8 +15,21 @@
 // ==/UserScript==
 "use strict";
 
+const defaultList = [
+  "#взаимопиар",
+  "#партнерский",
+  "#постпроплачен",
+  "#реклама",
+  "#рекламныйпост",
+  "#текстприслан",
+];
+
+let messagesLength;
+let adWords = GM_getValue("ad-words", defaultList);
+let delay = GM_getValue("update-interval", 3000);
+
 const startScript = () => {
-  let messages = document.querySelectorAll(".im_history_message_wrap");
+  const messages = document.querySelectorAll(".im_history_message_wrap");
   if (messages.length === messagesLength || messages.length === 0) return;
   messagesLength = messages.length;
   console.log({ messagesLength });
@@ -27,8 +40,9 @@ const startScript = () => {
       message.onclick = () => message.classList.toggle("advertisementMessage");
     }
   });
-}
+};
 
+let eventTimeout;
 const eventThrottler = delay => {
   if (!eventTimeout) {
     eventTimeout = setTimeout(() => {
@@ -50,18 +64,6 @@ GM_addStyle(`
   }
 `);
 
-const defaultList = [
-  "#взаимопиар",
-  "#партнерский",
-  "#постпроплачен",
-  "#реклама",
-  "#рекламныйпост",
-  "#текстприслан",
-];
-
-let adWords = GM_getValue("ad-words", defaultList);
-let delay = GM_getValue("update-interval", 3000);
-
 GM_registerMenuCommand("Filter list", () => {
   const wordList = GM_getValue("ad-words", adWords);
   const val = prompt("Enter words to filter, separated by comma:", wordList);
@@ -80,7 +82,5 @@ GM_registerMenuCommand("Update interval", () => {
   }
 });
 
-let messagesLength;
-let eventTimeout;
 // Run the script when an API message is received, throttled with delay
 window.addEventListener("message", () => eventThrottler(delay), false);
