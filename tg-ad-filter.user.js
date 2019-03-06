@@ -7,6 +7,9 @@
 // @namespace   Telegram-Ad-Filter
 // @include     https://web.telegram.org/*
 // @grant       GM_addStyle
+// @grant       GM_getValue
+// @grant       GM_setValue
+// @grant       GM_registerMenuCommand
 // ==/UserScript==
 "use strict";
 
@@ -45,7 +48,7 @@ GM_addStyle(`
   }
 `);
 
-const adWords = [
+const defaultList = [
   "#взаимопиар",
   "#партнерский",
   "#постпроплачен",
@@ -53,6 +56,18 @@ const adWords = [
   "#рекламныйпост",
   "#текстприслан",
 ];
+
+let adWords = GM_getValue("ad-words", defaultList);
+
+GM_registerMenuCommand("Filter list", () => {
+  const wordList = GM_getValue("ad-words", adWords);
+  const val = prompt("Enter words to filter, separated by comma:", wordList);
+  if (val !== null && typeof val === "string") {
+    adWords = val.split(",");
+    GM_setValue("ad-words", val.split(","));
+  }
+});
+
 let messagesLength;
 let eventTimeout;
 let delay = 3000;
