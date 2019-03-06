@@ -40,7 +40,7 @@ GM_addStyle(`
   .advertisementMessage > div:before {
     color: dodgerblue;
     font-weight: bold;
-    text-decoration-style: dotted;
+    text-decoration: underline dotted;
     content: "Advertisement";
   }
 `);
