@@ -60,6 +60,7 @@ const defaultList = [
 ];
 
 let adWords = GM_getValue("ad-words", defaultList);
+let delay = GM_getValue("update-interval", 3000);
 
 GM_registerMenuCommand("Filter list", () => {
   const wordList = GM_getValue("ad-words", adWords);
@@ -70,8 +71,16 @@ GM_registerMenuCommand("Filter list", () => {
   }
 });
 
+GM_registerMenuCommand("Update interval", () => {
+  const updateInteval = GM_getValue("update-interval", delay);
+  const val = prompt("Enter message scanning frequency (in ms):", updateInteval);
+  if (val !== null && typeof val === "string") {
+    delay = val;
+    GM_setValue("update-interval", val);
+  }
+});
+
 let messagesLength;
 let eventTimeout;
-let delay = 3000;
 // Run the script when an API message is received, throttled with delay
 window.addEventListener("message", () => eventThrottler(delay), false);
