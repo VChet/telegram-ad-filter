@@ -32,10 +32,13 @@ let delay = GM_getValue("update-interval", 3000);
 const applyStyles = messages => {
   // console.log({ adWords });
   messages.forEach(message => {
+    message = message.querySelector(".im_message_body");
     if (adWords.some(v => message.innerText.toLowerCase().indexOf(v.toLowerCase()) >= 0)) {
-      message = message.querySelector(".im_message_body");
       message.classList.add("advertisementMessage");
       message.onclick = () => message.classList.toggle("advertisementMessage");
+    } else {
+      message.classList.remove("advertisementMessage");
+      message.onclick = null;
     }
   });
 };
