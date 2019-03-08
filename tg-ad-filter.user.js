@@ -32,7 +32,7 @@ let delay = GM_getValue("update-interval", 3000);
 const applyStyles = messages => {
   // console.log({ adWords });
   messages.forEach(message => {
-    if (adWords.some(v => message.innerText.indexOf(v) >= 0)) {
+    if (adWords.some(v => message.innerText.toLowerCase().indexOf(v.toLowerCase()) >= 0)) {
       message = message.querySelector(".im_message_body");
       message.classList.add("advertisementMessage");
       message.onclick = () => message.classList.toggle("advertisementMessage");
@@ -68,10 +68,12 @@ GM_addStyle(`
 
 GM_registerMenuCommand("Filter list", () => {
   const wordList = GM_getValue("ad-words", adWords);
-  const val = prompt("Enter words to filter, separated by comma:", wordList);
+  let val = prompt("Enter words to filter, separated by comma:", wordList);
   if (val !== null && typeof val === "string") {
-    adWords = val.split(",");
-    GM_setValue("ad-words", val.split(","));
+    // Convert string to array, remove empty entries, trim values
+    val = val.split(",").filter(v => v).map(v => v.trim());
+    adWords = val;
+    GM_setValue("ad-words", val);
     messages = document.querySelectorAll(".im_history_message_wrap");
     applyStyles(messages);
   }
