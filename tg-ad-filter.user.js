@@ -30,6 +30,7 @@ let adWords = GM_getValue("ad-words", defaultList);
 let delay = GM_getValue("update-interval", 3000);
 
 const applyStyles = messages => {
+  // console.log({ adWords });
   messages.forEach(message => {
     if (adWords.some(v => message.innerText.indexOf(v) >= 0)) {
       message = message.querySelector(".im_message_body");
@@ -47,7 +48,7 @@ const eventThrottler = delay => {
       messages = document.querySelectorAll(".im_history_message_wrap");
       if (messages.length === messagesLength || messages.length === 0) return;
       messagesLength = messages.length;
-      console.log({ messagesLength });
+      // console.log({ messagesLength });
       applyStyles(messages);
     }, delay);
   }
