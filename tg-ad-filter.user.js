@@ -24,15 +24,12 @@ const defaultList = [
   "#текстприслан",
 ];
 
+let messages;
 let messagesLength;
 let adWords = GM_getValue("ad-words", defaultList);
 let delay = GM_getValue("update-interval", 3000);
 
-const startScript = () => {
-  const messages = document.querySelectorAll(".im_history_message_wrap");
-  if (messages.length === messagesLength || messages.length === 0) return;
-  messagesLength = messages.length;
-  console.log({ messagesLength });
+const applyStyles = messages => {
   messages.forEach(message => {
     if (adWords.some(v => message.innerText.indexOf(v) >= 0)) {
       message = message.querySelector(".im_message_body");
@@ -47,7 +44,11 @@ const eventThrottler = delay => {
   if (!eventTimeout) {
     eventTimeout = setTimeout(() => {
       eventTimeout = null;
-      startScript();
+      messages = document.querySelectorAll(".im_history_message_wrap");
+      if (messages.length === messagesLength || messages.length === 0) return;
+      messagesLength = messages.length;
+      console.log({ messagesLength });
+      applyStyles(messages);
     }, delay);
   }
 };
@@ -70,6 +71,8 @@ GM_registerMenuCommand("Filter list", () => {
   if (val !== null && typeof val === "string") {
     adWords = val.split(",");
     GM_setValue("ad-words", val.split(","));
+    messages = document.querySelectorAll(".im_history_message_wrap");
+    applyStyles(messages);
   }
 });
 
