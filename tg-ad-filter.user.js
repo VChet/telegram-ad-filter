@@ -36,7 +36,12 @@ const applyStyles = messages => {
     if (!message) return;
     if (message.innerText && adWords.some(v => message.innerText.toLowerCase().indexOf(v.toLowerCase()) >= 0)) {
       message.classList.add("advertisementMessage");
-      message.onclick = () => message.classList.toggle("advertisementMessage");
+      const fwdMessage = message.querySelector(".im_message_fwd_from");
+      if (fwdMessage) fwdMessage.style.display = "none";
+      message.onclick = () => {
+        message.classList.toggle("advertisementMessage");
+        if (fwdMessage) fwdMessage.style.display = fwdMessage.style.display === "none" ? "block" : "none";
+      };
     } else {
       message.classList.remove("advertisementMessage");
       message.onclick = null;
