@@ -18,6 +18,6 @@
     "major": "npx ver major tg-ad-filter.user.js"
   },
   "devDependencies": {
-    "ver": "^4.0.1"
+    "ver": "^5.1.2"
   }
 }
