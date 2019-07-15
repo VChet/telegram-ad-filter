@@ -15,14 +15,21 @@
 // ==/UserScript==
 "use strict";
 
-const defaultList = [
-  "#взаимопиар",
-  "#партнерский",
-  "#постпроплачен",
-  "#реклама",
-  "#рекламныйпост",
-  "#текстприслан",
+let defaultList = [
+  "#advertisement",
+  "#promo",
 ];
+
+if (navigator.language === "ru-RU") {
+  defaultList = [
+    "#взаимопиар",
+    "#партнерский",
+    "#постпроплачен",
+    "#реклама",
+    "#рекламныйпост",
+    "#текстприслан",
+  ];
+}
 
 let messages;
 let messagesLength;
