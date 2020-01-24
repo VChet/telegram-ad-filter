@@ -13,11 +13,11 @@
     "url": "https://github.com/VChet/Telegram-Ad-Filter/issues"
   },
   "scripts": {
-    "patch": "npx ver patch tg-ad-filter.user.js",
-    "minor": "npx ver minor tg-ad-filter.user.js",
-    "major": "npx ver major tg-ad-filter.user.js"
+    "patch": "versions patch tg-ad-filter.user.js",
+    "minor": "versions minor tg-ad-filter.user.js",
+    "major": "versions major tg-ad-filter.user.js"
   },
   "devDependencies": {
-    "ver": "^5.1.2"
+    "versions": "^7.0.5"
   }
 }
