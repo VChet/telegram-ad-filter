@@ -18,6 +18,6 @@
     "major": "versions major tg-ad-filter.user.js"
   },
   "devDependencies": {
-    "versions": "^7.0.5"
+    "versions": "^8.2.1"
   }
 }
