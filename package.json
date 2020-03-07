@@ -13,9 +13,9 @@
     "url": "https://github.com/VChet/Telegram-Ad-Filter/issues"
   },
   "scripts": {
-    "patch": "versions patch tg-ad-filter.user.js",
-    "minor": "versions minor tg-ad-filter.user.js",
-    "major": "versions major tg-ad-filter.user.js"
+    "patch": "versions patch --all tg-ad-filter.user.js",
+    "minor": "versions minor --all tg-ad-filter.user.js",
+    "major": "versions major --all tg-ad-filter.user.js"
   },
   "devDependencies": {
     "versions": "^8.2.1"
