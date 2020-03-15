@@ -15,9 +15,7 @@
 // ==/UserScript==
 
 /* jshint esversion: 6 */
-(function() {
-  "use strict";
-
+(function main() {
   let defaultList = [
     "#advertisement",
     "#promo",
@@ -38,11 +36,12 @@
   let messagesLength;
   let adWords = GM_getValue("ad-words", defaultList);
   let delay = GM_getValue("update-interval", 3000);
+  let eventTimeout;
 
-  const applyStyles = messages => {
+  function applyStyles(messagesWrappers) {
     // console.log({ adWords });
-    messages.forEach(message => {
-      message = message.querySelector(".im_message_body");
+    messagesWrappers.forEach(messageWrapper => {
+      const message = messageWrapper.querySelector(".im_message_body");
       if (!message) return;
       if (message.innerText && adWords.some(v => message.innerText.toLowerCase().indexOf(v.toLowerCase()) >= 0)) {
         message.classList.add("advertisementMessage");
@@ -57,10 +56,9 @@
         message.onclick = null;
       }
     });
-  };
+  }
 
-  let eventTimeout;
-  const eventThrottler = delay => {
+  function eventThrottler(timeout) {
     if (!eventTimeout) {
       eventTimeout = setTimeout(() => {
         eventTimeout = null;
@@ -69,9 +67,9 @@
         messagesLength = messages.length;
         // console.log({ messagesLength });
         applyStyles(messages);
-      }, delay);
+      }, timeout);
     }
-  };
+  }
 
   GM_addStyle(`
     .advertisementMessage {
@@ -109,4 +107,4 @@
 
   // Run the script when an API message is received, throttled with delay
   window.addEventListener("message", () => eventThrottler(delay), false);
-})();
+}());
