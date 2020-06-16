@@ -98,8 +98,8 @@
   });
 
   GM_registerMenuCommand("Update interval", () => {
-    const updateInteval = GM_getValue("update-interval", delay);
-    const val = prompt("Enter message scanning frequency (in ms):", updateInteval);
+    const updateInterval = GM_getValue("update-interval", delay);
+    const val = prompt("Enter message scanning frequency (in ms):", updateInterval);
     if (val !== null && typeof val === "string") {
       delay = val;
       GM_setValue("update-interval", val);
