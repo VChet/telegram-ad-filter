@@ -4,6 +4,7 @@
 // @description Collapses messages that contain words from the ad-word list
 // @license     MIT
 // @author      VChet
+// @icon        https://web.telegram.org/favicon.ico
 // @namespace   Telegram-Ad-Filter
 // @include     https://web.telegram.org/*
 // @grant       GM_addStyle
