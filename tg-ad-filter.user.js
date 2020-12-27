@@ -15,7 +15,7 @@
 // @downloadURL https://raw.githubusercontent.com/VChet/Telegram-Ad-Filter/master/tg-ad-filter.user.js
 // ==/UserScript==
 
-/* jshint esversion: 6 */
+/* jshint esversion: 10 */
 (function main() {
   let defaultList = [
     "#advertisement",
