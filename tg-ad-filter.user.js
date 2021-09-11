@@ -6,7 +6,7 @@
 // @author      VChet
 // @icon        https://web.telegram.org/favicon.ico
 // @namespace   Telegram-Ad-Filter
-// @include     https://web.telegram.org/*
+// @include     https://web.telegram.org/k/*
 // @grant       GM_addStyle
 // @grant       GM_getValue
 // @grant       GM_setValue
@@ -17,11 +17,7 @@
 
 /* jshint esversion: 10 */
 (function main() {
-  let defaultList = [
-    "#advertisement",
-    "#promo",
-  ];
-
+  let defaultList = ["#advertisement", "#promo"];
   if (navigator.language === "ru-RU") {
     defaultList = [
       "#взаимопиар",
@@ -32,80 +28,78 @@
       "#текстприслан",
     ];
   }
-
-  let messages;
-  let messagesLength;
   let adWords = GM_getValue("ad-words", defaultList);
-  let delay = GM_getValue("update-interval", 3000);
-  let eventTimeout;
 
-  function applyStyles(messagesWrappers) {
-    // console.log({ adWords });
-    messagesWrappers.forEach(messageWrapper => {
-      const message = messageWrapper.querySelector(".im_message_body");
-      if (!message) return;
-      if (message.innerText && adWords.some(v => message.innerText.toLowerCase().indexOf(v.toLowerCase()) >= 0)) {
-        message.classList.add("advertisementMessage");
-        const fwdMessage = message.querySelector(".im_message_fwd_from");
-        if (fwdMessage) fwdMessage.style.display = "none";
-        message.onclick = () => {
-          message.classList.toggle("advertisementMessage");
-          if (fwdMessage) fwdMessage.style.display = fwdMessage.style.display === "none" ? "block" : "none";
-        };
-      } else {
-        message.classList.remove("advertisementMessage");
-        message.onclick = null;
-      }
+  function applyStyles(node) {
+    const message = node.querySelector(".message");
+    if (!message?.innerText) return;
+    const hasAdWord = adWords.some((filter) =>
+      message.innerText.toLowerCase().includes(filter.toLowerCase())
+    );
+    if (!hasAdWord || node.querySelector(".advertisement")) return;
+
+    const trigger = document.createElement("div");
+    trigger.classList.add("advertisement");
+    trigger.innerText = "Advertisement";
+    node.querySelector(".bubble-content").prepend(trigger);
+
+    node.classList.add("hasAdvertisement");
+    trigger.addEventListener("click", () => {
+      node.classList.remove("hasAdvertisement");
+    });
+    message.addEventListener("click", () => {
+      node.classList.add("hasAdvertisement");
     });
   }
 
-  function eventThrottler(timeout) {
-    if (!eventTimeout) {
-      eventTimeout = setTimeout(() => {
-        eventTimeout = null;
-        messages = document.querySelectorAll(".im_history_message_wrap");
-        if (messages.length === messagesLength || messages.length === 0) return;
-        messagesLength = messages.length;
-        // console.log({ messagesLength });
-        applyStyles(messages);
-      }, timeout);
-    }
-  }
-
   GM_addStyle(`
-    .advertisementMessage {
-      max-height: 40px;
+    .bubble:not(.hasAdvertisement) .advertisement,
+    .bubble.hasAdvertisement .message,
+    .bubble.hasAdvertisement .bubble-beside-button {
+      display: none;
     }
-    .advertisementMessage > div:before {
-      color: dodgerblue;
-      font-weight: bold;
+    .advertisement {
+      position: relative;
+      padding: 0.5rem 1rem;
       text-decoration: underline dotted;
-      content: "Advertisement";
+      cursor: pointer;
+      font-weight: bold;
+      color: var(--link-color);
     }
   `);
 
   GM_registerMenuCommand("Filter list", () => {
-    const wordList = GM_getValue("ad-words", adWords);
-    let val = prompt("Enter words to filter, separated by comma:", wordList);
-    if (val !== null && typeof val === "string") {
-      // Convert string to array, remove empty entries, trim values
-      val = val.split(",").filter(v => v).map(v => v.trim());
-      adWords = val;
-      GM_setValue("ad-words", val);
-      messages = document.querySelectorAll(".im_history_message_wrap");
-      applyStyles(messages);
-    }
+    const oldValue = GM_getValue("ad-words", adWords);
+    const input = prompt(
+      "Enter words to filter, separated by comma:",
+      oldValue
+    );
+    // Convert string to array, trim values
+    const newValue = input.split(",").reduce((acc, entry) => {
+      if (entry) acc.push(entry.trim());
+      return acc;
+    }, []);
+    adWords = newValue;
+    GM_setValue("ad-words", newValue);
+    document.querySelectorAll(".bubble").forEach((message) => {
+      applyStyles(message);
+    });
   });
 
-  GM_registerMenuCommand("Update interval", () => {
-    const updateInterval = GM_getValue("update-interval", delay);
-    const val = prompt("Enter message scanning frequency (in ms):", updateInterval);
-    if (val !== null && typeof val === "string") {
-      delay = val;
-      GM_setValue("update-interval", val);
-    }
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.type !== "childList" || !mutation.addedNodes.length) return;
+      mutation.addedNodes.forEach((node) => {
+        if (node.nodeType === 1 && node.classList.contains("bubble")) {
+          applyStyles(node);
+        }
+      });
+    });
   });
 
-  // Run the script when an API message is received, throttled with delay
-  window.addEventListener("message", () => eventThrottler(delay), false);
-}());
+  observer.observe(document.documentElement, {
+    childList: true,
+    subtree: true,
+    attributeFilter: ["class"],
+  });
+})();
