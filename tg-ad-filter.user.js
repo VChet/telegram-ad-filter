@@ -16,26 +16,15 @@
 // ==/UserScript==
 
 /* jshint esversion: 10 */
-(function main() {
+(function () {
   let defaultList = ["#advertisement", "#promo"];
-  if (navigator.language === "ru-RU") {
-    defaultList = [
-      "#взаимопиар",
-      "#партнерский",
-      "#постпроплачен",
-      "#реклама",
-      "#рекламныйпост",
-      "#текстприслан",
-    ];
-  }
+  if (navigator.language === "ru-RU") defaultList = ["#взаимопиар", "#партнерский", "#реклама", "#рекламный"];
   let adWords = GM_getValue("ad-words", defaultList);
 
   function applyStyles(node) {
     const message = node.querySelector(".message");
     if (!message?.innerText) return;
-    const hasAdWord = adWords.some((filter) =>
-      message.innerText.toLowerCase().includes(filter.toLowerCase())
-    );
+    const hasAdWord = adWords.some((filter) => message.innerText.toLowerCase().includes(filter.toLowerCase()));
     if (!hasAdWord || node.querySelector(".advertisement")) return;
 
     const trigger = document.createElement("div");
