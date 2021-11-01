@@ -1,7 +1,6 @@
 ## Telegram Ad Filter
 
 [![version](https://img.shields.io/github/tag/VChet/Telegram-Ad-Filter.svg?label=version)](https://github.com/VChet/Telegram-Ad-Filter/tags)
-[![devDep](https://img.shields.io/david/dev/VChet/Telegram-Ad-Filter.svg?label=devDependencies)](https://david-dm.org/VChet/Telegram-Ad-Filter?type=dev)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 
 Userscript for web.telegram.org, which collapses messages containing words from the ad-word list.
