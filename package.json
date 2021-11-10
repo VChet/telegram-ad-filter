@@ -13,6 +13,8 @@
     "url": "https://github.com/VChet/Telegram-Ad-Filter/issues"
   },
   "scripts": {
+    "lint": "eslint --ext js .",
+    "fix": "npm run lint -- --fix",
     "patch": "versions patch --all tg-ad-filter.user.js",
     "minor": "versions minor --all tg-ad-filter.user.js",
     "major": "versions major --all tg-ad-filter.user.js"
