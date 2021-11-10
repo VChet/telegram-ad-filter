@@ -30,7 +30,7 @@
     const trigger = document.createElement("div");
     trigger.classList.add("advertisement");
     trigger.innerText = "Advertisement";
-    node.querySelector(".bubble-content").prepend(trigger);
+    node.querySelector(".bubble-content").append(trigger);
 
     node.classList.add("hasAdvertisement");
     trigger.addEventListener("click", () => { node.classList.remove("hasAdvertisement"); });
