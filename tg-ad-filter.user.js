@@ -69,9 +69,8 @@
   const observer = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
       if (mutation.type !== "childList" || !mutation.addedNodes.length) return;
-      mutation.addedNodes.forEach((node) => {
-        if (node.nodeType === 1 && node.classList.contains("bubble")) applyStyles(node);
-      });
+      const nodes = [...mutation.addedNodes].filter((node) => node.nodeType === 1 && node.classList.contains("bubble"));
+      if (nodes.length) document.querySelectorAll(".bubble").forEach((message) => { applyStyles(message); });
     });
   });
 
