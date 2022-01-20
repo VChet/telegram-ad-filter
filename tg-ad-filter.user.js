@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 /* jshint esversion: 10 */
-(function () {
+(() => {
   let defaultList = ["#advertisement", "#promo"];
   if (navigator.language === "ru-RU") defaultList = ["#взаимопиар", "#партнерский", "#реклама", "#рекламный"];
   let adWords = GM_getValue("ad-words", defaultList);
@@ -75,4 +75,4 @@
   });
 
   observer.observe(document.documentElement, { childList: true, subtree: true, attributeFilter: ["class"] });
-}());
+})();

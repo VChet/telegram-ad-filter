@@ -5,18 +5,11 @@
     "ecmaVersion": 2021
   },
   "rules": {
-    "func-names": "off",
-    "object-curly-newline": "off",
-    "consistent-return": "off",
-    "linebreak-style": "off",
-    "no-console": "off",
-    "no-alert": "off",
-    "quotes": ["error", "double"],
-    "import/no-cycle": "error",
+    "linebreak-style": ["warn", "windows"],
     "max-len": ["warn", { "code": 120 }],
-    "no-underscore-dangle": ["error", {"allow": ["_id"]}],
-    "wrap-iife": ["warn", "outside"],
-    "comma-dangle": ["error", "never"]
+    "no-alert": "off",
+    "no-console": "warn",
+    "quotes": ["error", "double"]
   },
   "env": {
     "browser": true,
