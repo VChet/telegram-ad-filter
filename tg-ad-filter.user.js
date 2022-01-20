@@ -32,15 +32,16 @@
     trigger.innerText = "Advertisement";
     node.querySelector(".bubble-content").append(trigger);
 
-    node.classList.add("hasAdvertisement");
-    trigger.addEventListener("click", () => { node.classList.remove("hasAdvertisement"); });
-    message.addEventListener("click", () => { node.classList.add("hasAdvertisement"); });
+    node.classList.add("has-advertisement");
+    trigger.addEventListener("click", () => { node.classList.remove("has-advertisement"); });
+    message.addEventListener("click", () => { node.classList.add("has-advertisement"); });
   }
 
   GM_addStyle(`
-    .bubble:not(.hasAdvertisement) .advertisement,
-    .bubble.hasAdvertisement .message,
-    .bubble.hasAdvertisement .bubble-beside-button {
+    .bubble:not(.has-advertisement) .advertisement,
+    .bubble.has-advertisement .message,
+    .bubble.has-advertisement .bubble-beside-button,
+    .bubble.has-advertisement .attachment {
       display: none;
     }
     .advertisement {
