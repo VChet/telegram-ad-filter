@@ -4,9 +4,6 @@ updates:
   directory: "/"
   schedule:
     interval: monthly
-    timezone: Asia/Yekaterinburg
-  reviewers:
-    - VChet
   open-pull-requests-limit: 10
   labels:
   - dependency
