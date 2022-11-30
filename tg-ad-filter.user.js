@@ -6,7 +6,7 @@
 // @author      VChet
 // @icon        https://web.telegram.org/favicon.ico
 // @namespace   Telegram-Ad-Filter
-// @include     https://web.telegram.org/k/*
+// @match       https://web.telegram.org/k/*
 // @grant       GM_addStyle
 // @grant       GM_getValue
 // @grant       GM_setValue
