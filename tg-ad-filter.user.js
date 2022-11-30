@@ -21,38 +21,6 @@
   if (navigator.language === "ru-RU") defaultList = ["#взаимопиар", "#партнерский", "#реклама", "#рекламный"];
   let adWords = GM_getValue("ad-words", defaultList);
 
-  const observer = new MutationObserver(mutationHandler);
-  observer.observe(document, { childList: true, subtree: true, attributeFilter: ["class"] });
-
-  function mutationHandler(mutationRecords) {
-    mutationRecords.forEach(({ type, addedNodes }) => {
-      if (type === "childList" && typeof addedNodes === "object"  && addedNodes.length) {
-        for (const node of addedNodes) { walk(node); }
-      }
-    });
-  }
-
-  function walk(node) {
-    if (!node.nodeType) { return; }
-    let child = null;
-    let next = null;
-    switch (node.nodeType) {
-      case 1: // Element
-      case 9: // Document
-      case 11: // Document fragment
-        if (node.classList?.contains("bubble")) { applyStyles(node) }
-        child = node.firstChild;
-        while (child) {
-          next = child.nextSibling;
-          walk(child);
-          child = next;
-        }
-        break;
-      case 3: // Text node
-        break;
-    }
-  }
-
   function applyStyles(node) {
     const message = node.querySelector(".message");
     if (!message?.innerText) return;
@@ -67,6 +35,36 @@
     node.classList.add("has-advertisement");
     trigger.addEventListener("click", () => { node.classList.remove("has-advertisement"); });
     message.addEventListener("click", () => { node.classList.add("has-advertisement"); });
+  }
+
+  function walk(node) {
+    if (!node.nodeType) { return; }
+    let child = null;
+    let next = null;
+    switch (node.nodeType) {
+      case 1: // Element
+      case 9: // Document
+      case 11: // Document fragment
+        if (node.classList?.contains("bubble")) { applyStyles(node); }
+        child = node.firstChild;
+        while (child) {
+          next = child.nextSibling;
+          walk(child);
+          child = next;
+        }
+        break;
+      case 3: // Text node
+      default:
+        break;
+    }
+  }
+
+  function mutationHandler(mutationRecords) {
+    mutationRecords.forEach(({ type, addedNodes }) => {
+      if (type === "childList" && typeof addedNodes === "object" && addedNodes.length) {
+        addedNodes.forEach((node) => { walk(node); });
+      }
+    });
   }
 
   GM_addStyle(`
@@ -96,4 +94,7 @@
     GM_setValue("ad-words", newValue);
     document.querySelectorAll(".bubble").forEach((message) => { applyStyles(message); });
   });
+
+  const observer = new MutationObserver(mutationHandler);
+  observer.observe(document, { childList: true, subtree: true, attributeFilter: ["class"] });
 })();
