@@ -2,10 +2,9 @@
   "extends": "airbnb-base",
   "root": true,
   "parserOptions": {
-    "ecmaVersion": 2021
+    "ecmaVersion": 2022
   },
   "rules": {
-    "linebreak-style": ["warn", "windows"],
     "max-len": ["warn", { "code": 120 }],
     "no-alert": "off",
     "no-console": "warn",
