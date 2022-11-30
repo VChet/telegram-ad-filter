@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Telegram Ad Filter
-// @version     0.4.5
+// @version     1.0.0
 // @description Collapses messages that contain words from the ad-word list
 // @license     MIT
 // @author      VChet
