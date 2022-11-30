@@ -8,18 +8,33 @@
 // @namespace   Telegram-Ad-Filter
 // @match       https://web.telegram.org/k/*
 // @grant       GM_addStyle
-// @grant       GM_getValue
-// @grant       GM_setValue
-// @grant       GM_registerMenuCommand
 // @updateURL   https://raw.githubusercontent.com/VChet/Telegram-Ad-Filter/master/tg-ad-filter.user.js
 // @downloadURL https://raw.githubusercontent.com/VChet/Telegram-Ad-Filter/master/tg-ad-filter.user.js
 // ==/UserScript==
 
 /* jshint esversion: 10 */
-(() => {
-  let defaultList = ["#advertisement", "#promo"];
-  if (navigator.language === "ru-RU") defaultList = ["#взаимопиар", "#партнерский", "#реклама", "#рекламный"];
-  let adWords = GM_getValue("ad-words", defaultList);
+(async () => {
+  GM_addStyle(`
+    .bubble:not(.has-advertisement) .advertisement,
+    .bubble.has-advertisement .bubble-content *:not(.advertisement) {
+      display: none;
+    }
+    .advertisement {
+      position: relative;
+      padding: 0.5rem 1rem;
+      text-decoration: underline dotted;
+      cursor: pointer;
+      font-weight: bold;
+      color: var(--link-color);
+    }
+  `);
+
+  let adWords = [];
+  function fetchWords() {
+    return fetch("https://raw.githubusercontent.com/VChet/Telegram-Ad-Filter/master/blacklist.json")
+      .then((response) => response.json())
+      .then((data) => data);
+  }
 
   function applyStyles(node) {
     const message = node.querySelector(".message");
@@ -67,34 +82,7 @@
     });
   }
 
-  GM_addStyle(`
-    .bubble:not(.has-advertisement) .advertisement,
-    .bubble.has-advertisement .bubble-content *:not(.advertisement) {
-      display: none;
-    }
-    .advertisement {
-      position: relative;
-      padding: 0.5rem 1rem;
-      text-decoration: underline dotted;
-      cursor: pointer;
-      font-weight: bold;
-      color: var(--link-color);
-    }
-  `);
-
-  GM_registerMenuCommand("Filter list", () => {
-    const oldValue = GM_getValue("ad-words", adWords);
-    const input = prompt("Enter words to filter, separated by comma:", oldValue);
-    // Convert string to array, trim values
-    const newValue = input.split(",").reduce((acc, entry) => {
-      if (entry) acc.push(entry.trim());
-      return acc;
-    }, []);
-    adWords = newValue;
-    GM_setValue("ad-words", newValue);
-    document.querySelectorAll(".bubble").forEach((message) => { applyStyles(message); });
-  });
-
+  adWords = await fetchWords();
   const observer = new MutationObserver(mutationHandler);
   observer.observe(document, { childList: true, subtree: true, attributeFilter: ["class"] });
 })();
