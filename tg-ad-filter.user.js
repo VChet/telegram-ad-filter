@@ -12,7 +12,7 @@
 // @downloadURL https://raw.githubusercontent.com/VChet/Telegram-Ad-Filter/master/tg-ad-filter.user.js
 // ==/UserScript==
 
-/* jshint esversion: 10 */
+/* jshint esversion: 11 */
 (async () => {
   GM_addStyle(`
     .bubble:not(.has-advertisement) .advertisement,
