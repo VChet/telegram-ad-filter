@@ -62,7 +62,7 @@
     const trigger = document.createElement("div");
     trigger.classList.add("advertisement");
     trigger.innerText = "Advertisement";
-    node.querySelector(".bubble-content").append(trigger);
+    node.querySelector(".bubble-content").prepend(trigger);
 
     node.classList.add("has-advertisement");
     trigger.addEventListener("click", () => { node.classList.remove("has-advertisement"); });
@@ -71,9 +71,7 @@
 
   GM_addStyle(`
     .bubble:not(.has-advertisement) .advertisement,
-    .bubble.has-advertisement .message,
-    .bubble.has-advertisement .bubble-beside-button,
-    .bubble.has-advertisement .attachment {
+    .bubble.has-advertisement .bubble-content *:not(.advertisement) {
       display: none;
     }
     .advertisement {
