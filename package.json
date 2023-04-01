@@ -20,8 +20,8 @@
     "major": "versions major --all package.json tg-ad-filter.user.js"
   },
   "devDependencies": {
-    "eslint": "^8.28.0",
+    "eslint": "^8.37.0",
     "eslint-config-airbnb-base": "^15.0.0",
-    "versions": "^10.3.0"
+    "versions": "^10.4.2"
   }
 }
