@@ -5,11 +5,11 @@
 // @license     MIT
 // @author      VChet
 // @icon        https://web.telegram.org/favicon.ico
-// @namespace   Telegram-Ad-Filter
+// @namespace   telegram-ad-filter
 // @match       https://web.telegram.org/k/*
 // @grant       GM_addStyle
-// @updateURL   https://raw.githubusercontent.com/VChet/Telegram-Ad-Filter/master/tg-ad-filter.user.js
-// @downloadURL https://raw.githubusercontent.com/VChet/Telegram-Ad-Filter/master/tg-ad-filter.user.js
+// @updateURL   https://raw.githubusercontent.com/VChet/telegram-ad-filter/master/tg-ad-filter.user.js
+// @downloadURL https://raw.githubusercontent.com/VChet/telegram-ad-filter/master/tg-ad-filter.user.js
 // ==/UserScript==
 
 /* jshint esversion: 11 */
@@ -31,7 +31,7 @@
 
   let adWords = [];
   function fetchWords() {
-    return fetch("https://raw.githubusercontent.com/VChet/Telegram-Ad-Filter/master/blacklist.json")
+    return fetch("https://raw.githubusercontent.com/VChet/telegram-ad-filter/master/blacklist.json")
       .then((response) => response.json())
       .then((data) => data);
   }

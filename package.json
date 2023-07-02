@@ -4,13 +4,13 @@
   "description": "Userscript that minimizes messages containing words from the list",
   "author": "VChet",
   "license": "MIT",
-  "homepage": "https://github.com/VChet/Telegram-Ad-Filter#readme",
+  "homepage": "https://github.com/VChet/telegram-ad-filter#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/VChet/Telegram-Ad-Filter.git"
+    "url": "git+https://github.com/VChet/telegram-ad-filter.git"
   },
   "bugs": {
-    "url": "https://github.com/VChet/Telegram-Ad-Filter/issues"
+    "url": "https://github.com/VChet/telegram-ad-filter/issues"
   },
   "scripts": {
     "lint": "eslint --ext js .",
