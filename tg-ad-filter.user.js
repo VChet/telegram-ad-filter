@@ -29,22 +29,20 @@
     }
   `);
 
-  let adWords = [];
-  function fetchWords() {
-    return fetch("https://raw.githubusercontent.com/VChet/telegram-ad-filter/master/blacklist.json")
-      .then((response) => response.json())
-      .then((data) => data);
+  async function fetchWords() {
+    const response = await fetch("https://raw.githubusercontent.com/VChet/telegram-ad-filter/master/blacklist.json");
+    return await response.json();
   }
 
   function applyStyles(node) {
     const message = node.querySelector(".message");
-    if (!message?.innerText) return;
-    const hasAdWord = adWords.some((filter) => message.innerText.toLowerCase().includes(filter.toLowerCase()));
-    if (!hasAdWord || node.querySelector(".advertisement")) return;
+    if (!message?.textContent || node.querySelector(".advertisement")) return;
+    const hasAdWord = adWords.some((filter) => message.textContent.toLowerCase().includes(filter.toLowerCase()));
+    if (!hasAdWord) return;
 
     const trigger = document.createElement("div");
     trigger.classList.add("advertisement");
-    trigger.innerText = "Advertisement";
+    trigger.textContent = "Advertisement";
     node.querySelector(".bubble-content").prepend(trigger);
 
     node.classList.add("has-advertisement");
@@ -60,7 +58,7 @@
       case 1: // Element
       case 9: // Document
       case 11: // Document fragment
-        if (node.classList?.contains("bubble")) { applyStyles(node); }
+        if (node.matches(".bubble")) { applyStyles(node); }
         child = node.firstChild;
         while (child) {
           next = child.nextSibling;
@@ -82,7 +80,7 @@
     }
   }
 
-  adWords = await fetchWords();
+  const adWords = await fetchWords();
   const observer = new MutationObserver(mutationHandler);
   observer.observe(document, { childList: true, subtree: true, attributeFilter: ["class"] });
 })();
