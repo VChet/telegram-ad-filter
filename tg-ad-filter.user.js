@@ -20,11 +20,12 @@
       display: none;
     }
     .advertisement {
-      position: relative;
       padding: 0.5rem 1rem;
-      text-decoration: underline dotted;
       cursor: pointer;
-      font-weight: bold;
+      white-space: nowrap;
+      font-style: italic;
+      font-size: var(--messages-text-size);
+      font-weight: var(--font-weight-bold);
       color: var(--link-color);
     }
   `);
@@ -42,7 +43,7 @@
 
     const trigger = document.createElement("div");
     trigger.classList.add("advertisement");
-    trigger.textContent = "Advertisement";
+    trigger.textContent = "Blocked Ad";
     node.querySelector(".bubble-content").prepend(trigger);
 
     node.classList.add("has-advertisement");
