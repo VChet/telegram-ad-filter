@@ -3,13 +3,11 @@
 [![version](https://img.shields.io/github/tag/VChet/telegram-ad-filter.svg?label=version)](https://github.com/VChet/telegram-ad-filter/tags)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 
-Userscript for web.telegram.org, which collapses messages containing words from the ad-word list.
-
-[Script for legacy version](https://github.com/VChet/telegram-ad-filter/tree/legacy)
+UserScript for [Telegram WebK](https://web.telegram.org/k/) that minimizes messages containing words from the [ad-word list](https://github.com/VChet/telegram-ad-filter/blob/master/blacklist.json).
 
 ## Preview
 
-![](./meta/preview.gif)
+![Preview](./meta/preview.gif)
 
 ## Installation
 
@@ -21,7 +19,7 @@ Userscript for web.telegram.org, which collapses messages containing words from 
 
 ## Contribute
 
-Anyone and everyone is welcome to [contribute](https://github.com/VChet/telegram-ad-filter/pulls) and report any [issues](https://github.com/VChet/telegram-ad-filter/issues).
+If you have any ideas, bug reports, or feature requests, feel free to [contribute](https://github.com/VChet/telegram-ad-filter/pulls) or report [issues](https://github.com/VChet/telegram-ad-filter/issues).
 
 ## Development
 
