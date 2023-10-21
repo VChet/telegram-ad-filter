@@ -13,7 +13,7 @@
 // ==/UserScript==
 
 /* jshint esversion: 11 */
-(async () => {
+(async() => {
   GM_addStyle(`
     .bubble:not(.has-advertisement) .advertisement,
     .bubble.has-advertisement .bubble-content *:not(.advertisement) {
@@ -75,11 +75,11 @@
   }
 
   function mutationHandler(mutationRecords) {
-    mutationRecords.forEach(({ type, addedNodes }) => {
+    for (const { type, addedNodes } of mutationRecords) {
       if (type === "childList" && typeof addedNodes === "object" && addedNodes.length) {
-        addedNodes.forEach((node) => { walk(node); });
+        for (const node of addedNodes) { walk(node); }
       }
-    });
+    }
   }
 
   adWords = await fetchWords();
