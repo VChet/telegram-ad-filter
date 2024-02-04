@@ -1,0 +1,18 @@
+// ==UserScript==
+// @name         Telegram Ad Filter
+// @version      1.1.0
+// @description  Collapses messages that contain words from the ad-word list
+// @license      MIT
+// @author       VChet
+// @icon         https://web.telegram.org/favicon.ico
+// @namespace    telegram-ad-filter
+// @match        https://web.telegram.org/k/*
+// @require      https://github.com/sizzlemctwizzle/GM_config/raw/master/gm_config.js
+// @grant        GM_addStyle
+// @grant        GM_getValue
+// @grant        GM_setValue
+// @updateURL    https://raw.githubusercontent.com/VChet/telegram-ad-filter/master/tg-ad-filter.user.js
+// @downloadURL  https://raw.githubusercontent.com/VChet/telegram-ad-filter/master/tg-ad-filter.user.js
+// ==/UserScript==
+
+/* jshint esversion: 11 */
