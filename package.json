@@ -16,15 +16,12 @@
   "scripts": {
     "lint:js": "eslint .",
     "lint:js:fix": "npm run lint:js -- --fix",
-    "patch": "versions patch --all package.json tg-ad-filter.user.js",
-    "minor": "versions minor --all package.json tg-ad-filter.user.js",
-    "major": "versions major --all package.json tg-ad-filter.user.js"
+    "version": "node src/bump.cjs"
   },
   "devDependencies": {
     "eslint": "^8.56.0",
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-userscripts": "^0.5.2",
-    "globals": "^13.24.0",
-    "versions": "^12.0.0"
+    "globals": "^13.24.0"
   }
 }

@@ -19,7 +19,7 @@ export default [
     },
     rules: {
       "max-len": ["warn", { code: 120 }],
-      "no-console": "warn",
+      "no-console": ["warn", { allow: ["error"] }],
       quotes: ["error", "double"],
       semi: ["error", "always"],
       "space-before-function-paren": ["error", "never"]
