@@ -7,7 +7,10 @@
 // @icon         https://web.telegram.org/favicon.ico
 // @namespace    telegram-ad-filter
 // @match        https://web.telegram.org/k/*
+// @require      https://github.com/sizzlemctwizzle/GM_config/raw/master/gm_config.js
 // @grant        GM_addStyle
+// @grant        GM_getValue
+// @grant        GM_setValue
 // @updateURL    https://raw.githubusercontent.com/VChet/telegram-ad-filter/master/tg-ad-filter.user.js
 // @downloadURL  https://raw.githubusercontent.com/VChet/telegram-ad-filter/master/tg-ad-filter.user.js
 // ==/UserScript==
@@ -30,12 +33,88 @@
     }
   `);
 
-  async function fetchWords() {
-    const response = await fetch("https://raw.githubusercontent.com/VChet/telegram-ad-filter/master/blacklist.json");
-    return await response.json();
+  let adWords = [];
+  async function fetchLists(urlsString) {
+    const urls = urlsString.trim().split("\n");
+    const lists = await Promise.all(
+      urls.map((url) => fetch(url)
+        .then((response) => response.json())
+        .catch((error) => alert(error))
+      )
+    );
+    return [...new Set(lists.flat())];
   }
 
-  function applyStyles(node) {
+  const gmc = new GM_config({
+    id: "telegram-ad-filter",
+    frameStyle: `
+      inset: 115px auto auto 130px;
+      border: 1px solid rgb(0, 0, 0);
+      height: 300px;
+      margin: 0px;
+      max-height: 95%;
+      max-width: 95%;
+      opacity: 1;
+      overflow: auto;
+      padding: 0px;
+      position: fixed;
+      width: 75%;
+      z-index: 9999;
+      display: block;
+    `,
+    css: `
+      #telegram-ad-filter {
+        background: #181818;
+        color: #ffffff;
+      }
+      #telegram-ad-filter textarea {
+        resize: vertical;
+        width: 100%;
+        min-height: 150px;
+      }
+      #telegram-ad-filter .reset, #telegram-ad-filter .reset a, #telegram-ad-filter_buttons_holder {
+        color: inherit;
+      }
+    `,
+    title: "Telegram Ad Filter Settings",
+    fields: {
+      listUrls: {
+        label: "Blacklist URLs (one on each line)",
+        type: "textarea",
+        default: "https://raw.githubusercontent.com/VChet/telegram-ad-filter/master/blacklist.json"
+      }
+    },
+    events: {
+      init: async function() { adWords = await fetchLists(this.get("listUrls")); },
+      save: async function() {
+        adWords = await fetchLists(this.get("listUrls"));
+        this.close();
+      }
+    }
+  });
+
+  function addSettingsButton(node) {
+    const settingsButton = document.createElement("button");
+    settingsButton.classList.add("btn-icon", "rp");
+    settingsButton.setAttribute("title", "Telegram Ad Filter Settings");
+
+    const ripple = document.createElement("div");
+    ripple.classList.add("c-ripple");
+    const icon = document.createElement("span");
+    icon.classList.add("tgico", "button-icon");
+    icon.textContent = "";
+    settingsButton.append(ripple);
+    settingsButton.append(icon);
+
+    settingsButton.addEventListener("click", (event) => {
+      event.stopPropagation();
+      gmc.open();
+    });
+
+    node.append(settingsButton);
+  }
+
+  function handleMessageNode(node) {
     const message = node.querySelector(".message");
     if (!message?.textContent || node.querySelector(".advertisement")) return;
     const hasAdWord = adWords.some((filter) => message.textContent.toLowerCase().includes(filter.toLowerCase()));
@@ -59,7 +138,8 @@
       case 1: // Element
       case 9: // Document
       case 11: // Document fragment
-        if (node.matches(".bubble")) { applyStyles(node); }
+        if (node.matches(".chat-utils")) { addSettingsButton(node); }
+        if (node.matches(".bubble")) { handleMessageNode(node); }
         child = node.firstChild;
         while (child) {
           next = child.nextSibling;
@@ -81,7 +161,6 @@
     }
   }
 
-  const adWords = await fetchWords();
   const observer = new MutationObserver(mutationHandler);
   observer.observe(document, { childList: true, subtree: true, attributeFilter: ["class"] });
 })();
