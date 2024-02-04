@@ -7,10 +7,13 @@
 // @icon         https://web.telegram.org/favicon.ico
 // @namespace    telegram-ad-filter
 // @match        https://web.telegram.org/k/*
-// @require      https://github.com/sizzlemctwizzle/GM_config/raw/master/gm_config.js
+// @require      https://openuserjs.org/src/libs/sizzle/GM_config.js
 // @grant        GM_addStyle
 // @grant        GM_getValue
 // @grant        GM_setValue
+// @grant        GM.addStyle
+// @grant        GM.getValue
+// @grant        GM.setValue
 // @updateURL    https://raw.githubusercontent.com/VChet/telegram-ad-filter/master/tg-ad-filter.user.js
 // @downloadURL  https://raw.githubusercontent.com/VChet/telegram-ad-filter/master/tg-ad-filter.user.js
 // ==/UserScript==
