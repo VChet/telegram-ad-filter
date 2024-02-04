@@ -1,6 +1,6 @@
 {
   "name": "telegram-ad-filter",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Userscript that minimizes messages containing words from the list",
   "author": "VChet",
   "license": "MIT",
