@@ -1,15 +1,15 @@
 // ==UserScript==
-// @name        Telegram Ad Filter
-// @version     1.0.1
-// @description Collapses messages that contain words from the ad-word list
-// @license     MIT
-// @author      VChet
-// @icon        https://web.telegram.org/favicon.ico
-// @namespace   telegram-ad-filter
-// @match       https://web.telegram.org/k/*
-// @grant       GM_addStyle
-// @updateURL   https://raw.githubusercontent.com/VChet/telegram-ad-filter/master/tg-ad-filter.user.js
-// @downloadURL https://raw.githubusercontent.com/VChet/telegram-ad-filter/master/tg-ad-filter.user.js
+// @name         Telegram Ad Filter
+// @version      1.0.1
+// @description  Collapses messages that contain words from the ad-word list
+// @license      MIT
+// @author       VChet
+// @icon         https://web.telegram.org/favicon.ico
+// @namespace    telegram-ad-filter
+// @match        https://web.telegram.org/k/*
+// @grant        GM_addStyle
+// @updateURL    https://raw.githubusercontent.com/VChet/telegram-ad-filter/master/tg-ad-filter.user.js
+// @downloadURL  https://raw.githubusercontent.com/VChet/telegram-ad-filter/master/tg-ad-filter.user.js
 // ==/UserScript==
 
 /* jshint esversion: 11 */

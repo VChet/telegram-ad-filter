@@ -4,6 +4,7 @@
   "description": "Userscript that minimizes messages containing words from the list",
   "author": "VChet",
   "license": "MIT",
+  "type": "module",
   "homepage": "https://github.com/VChet/telegram-ad-filter#readme",
   "repository": {
     "type": "git",
@@ -13,15 +14,17 @@
     "url": "https://github.com/VChet/telegram-ad-filter/issues"
   },
   "scripts": {
-    "lint": "eslint --ext js .",
-    "fix": "npm run lint -- --fix",
+    "lint:js": "eslint .",
+    "lint:js:fix": "npm run lint:js -- --fix",
     "patch": "versions patch --all package.json tg-ad-filter.user.js",
     "minor": "versions minor --all package.json tg-ad-filter.user.js",
     "major": "versions major --all package.json tg-ad-filter.user.js"
   },
   "devDependencies": {
-    "eslint": "^8.52.0",
+    "eslint": "^8.56.0",
     "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-userscripts": "^0.5.2",
+    "globals": "^13.24.0",
     "versions": "^12.0.0"
   }
 }
