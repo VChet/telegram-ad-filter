@@ -14,8 +14,8 @@
 // @grant        GM.addStyle
 // @grant        GM.getValue
 // @grant        GM.setValue
-// @updateURL    https://raw.githubusercontent.com/VChet/telegram-ad-filter/master/tg-ad-filter.user.js
-// @downloadURL  https://raw.githubusercontent.com/VChet/telegram-ad-filter/master/tg-ad-filter.user.js
+// @updateURL    https://github.com/VChet/telegram-ad-filter/raw/master/tg-ad-filter.user.js
+// @downloadURL  https://github.com/VChet/telegram-ad-filter/raw/master/tg-ad-filter.user.js
 // ==/UserScript==
 
 /* jshint esversion: 11 */
@@ -114,7 +114,7 @@ const settingsConfig = {
     listUrls: {
       label: "Blacklist URLs (one on each line)",
       type: "textarea",
-      default: "https://raw.githubusercontent.com/VChet/telegram-ad-filter/master/blacklist.json"
+      default: "https://github.com/VChet/telegram-ad-filter/raw/master/blacklist.json"
     }
   }
 };
