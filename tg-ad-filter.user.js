@@ -19,7 +19,8 @@
 (async() => {
   GM_addStyle(`
     .bubble:not(.has-advertisement) .advertisement,
-    .bubble.has-advertisement .bubble-content *:not(.advertisement) {
+    .bubble.has-advertisement .bubble-content *:not(.advertisement),
+    .bubble.has-advertisement .reply-markup {
       display: none;
     }
     .advertisement {
