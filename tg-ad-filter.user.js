@@ -11,9 +11,6 @@
 // @grant        GM_addStyle
 // @grant        GM_getValue
 // @grant        GM_setValue
-// @grant        GM.addStyle
-// @grant        GM.getValue
-// @grant        GM.setValue
 // @updateURL    https://github.com/VChet/telegram-ad-filter/raw/master/tg-ad-filter.user.js
 // @downloadURL  https://github.com/VChet/telegram-ad-filter/raw/master/tg-ad-filter.user.js
 // ==/UserScript==
