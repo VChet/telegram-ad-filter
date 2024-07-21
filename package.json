@@ -20,10 +20,10 @@
     "version": "node src/bump.cjs"
   },
   "devDependencies": {
-    "eslint": "^8.56.0",
+    "eslint": "~8.57.0",
     "eslint-config-standard": "^17.1.0",
-    "eslint-plugin-userscripts": "^0.5.2",
-    "globals": "^13.24.0",
-    "rollup": "^4.9.6"
+    "eslint-plugin-userscripts": "^0.5.3",
+    "globals": "^15.8.0",
+    "rollup": "^4.19.0"
   }
 }
