@@ -1,7 +1,7 @@
 ## Telegram Ad Filter
 
 [![version](https://img.shields.io/github/tag/VChet/telegram-ad-filter.svg?label=version)](https://github.com/VChet/telegram-ad-filter/tags)
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-f0db4f.svg)](http://standardjs.com)
+[![neostandard javascript style](https://img.shields.io/badge/code_style-neostandard-7fffff?style=flat)](https://github.com/neostandard/neostandard)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 
 UserScript for [Telegram WebK](https://web.telegram.org/k/) that minimizes messages containing words from the [ad-word list](https://github.com/VChet/telegram-ad-filter/blob/master/blacklist.json).

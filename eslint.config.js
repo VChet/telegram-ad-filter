@@ -1,28 +1,25 @@
-import standard from "eslint-config-standard";
+import neostandard from "neostandard";
+import userscripts from "eslint-plugin-userscripts";
 import globals from "globals";
-import { FlatCompat } from "@eslint/eslintrc";
-
-const compat = new FlatCompat();
 
 export default [
-  ...compat.config(standard),
-  ...compat.config({
-    overrides: [{
-      files: ["*.user.js"],
-      extends: ["plugin:userscripts/recommended"]
-    }]
-  }),
+  ...neostandard(),
+  {
+    files: ["*.user.js"],
+    plugins: { userscripts: { rules: userscripts.rules } },
+    rules: { ...userscripts.configs.recommended.rules },
+    settings: { userscriptVersions: { violentmonkey: "*" } }
+  },
   {
     languageOptions: {
       parserOptions: { ecmaVersion: "latest" },
       globals: { GM_config: "readonly", ...globals.browser, ...globals.greasemonkey }
     },
     rules: {
-      "max-len": ["warn", { code: 120 }],
-      "no-console": ["warn", { allow: ["error"] }],
-      quotes: ["error", "double"],
-      semi: ["error", "always"],
-      "space-before-function-paren": ["error", "never"]
+      "@stylistic/comma-dangle": ["error", "never"],
+      "@stylistic/quotes": ["error", "double"],
+      "@stylistic/semi": ["error", "always"],
+      "@stylistic/space-before-function-paren": ["error", "never"]
     }
   }
 ];
