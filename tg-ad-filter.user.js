@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Telegram Ad Filter
-// @version      1.1.3
+// @version      1.1.4
 // @description  Collapses messages that contain words from the ad-word list
 // @license      MIT
 // @author       VChet
@@ -11,6 +11,9 @@
 // @grant        GM_addStyle
 // @grant        GM_getValue
 // @grant        GM_setValue
+// @homepage     https://github.com/VChet/telegram-ad-filter
+// @homepageURL  https://github.com/VChet/telegram-ad-filter
+// @supportURL   https://github.com/VChet/telegram-ad-filter
 // @updateURL    https://github.com/VChet/telegram-ad-filter/raw/master/tg-ad-filter.user.js
 // @downloadURL  https://github.com/VChet/telegram-ad-filter/raw/master/tg-ad-filter.user.js
 // ==/UserScript==
@@ -111,7 +114,7 @@ const settingsConfig = {
     listUrls: {
       label: "Blacklist URLs (one on each line)",
       type: "textarea",
-      default: "https://github.com/VChet/telegram-ad-filter/raw/master/blacklist.json"
+      default: "https://raw.githubusercontent.com/VChet/telegram-ad-filter/master/blacklist.json"
     }
   }
 };
