@@ -9,7 +9,7 @@ export const settingsConfig = {
     listUrls: {
       label: "Blacklist URLs (one on each line)",
       type: "textarea",
-      default: "https://github.com/VChet/telegram-ad-filter/raw/master/blacklist.json"
+      default: "https://raw.githubusercontent.com/VChet/telegram-ad-filter/master/blacklist.json"
     }
   }
 };
