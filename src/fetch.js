@@ -1,3 +1,7 @@
+/**
+ * @param {string} urlsString - A string containing one URL per line
+ * @returns {Promise<string[]>}
+ */
 export async function fetchLists(urlsString) {
   const urls = urlsString.trim().split("\n");
   const lists = await Promise.all(

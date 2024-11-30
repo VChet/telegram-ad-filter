@@ -46,6 +46,11 @@ export const popupStyle = `
   }
 `;
 
+/**
+ * @param {HTMLElement} node
+ * @param {Function} callback
+ * @returns {void}
+ */
 export function addSettingsButton(node, callback) {
   const settingsButton = document.createElement("button");
   settingsButton.classList.add("btn-icon", "rp");
@@ -67,16 +72,21 @@ export function addSettingsButton(node, callback) {
   node.append(settingsButton);
 }
 
+/**
+ * @param {HTMLElement} node
+ * @param {string[]} adWords
+ * @returns {void}
+ */
 export function handleMessageNode(node, adWords) {
-  const message = node.querySelector(".message");
+  const message = (/** @type {HTMLElement} */ (node.querySelector(".message")));
   if (!message?.textContent || node.querySelector(".advertisement")) return;
-  const hasAdWord = adWords.some((filter) => message.textContent.toLowerCase().includes(filter.toLowerCase()));
+  const hasAdWord = adWords.some((filter) => message.textContent?.toLowerCase().includes(filter.toLowerCase()));
   if (!hasAdWord) return;
 
   const trigger = document.createElement("div");
   trigger.classList.add("advertisement");
   trigger.textContent = "Blocked Ad";
-  node.querySelector(".bubble-content").prepend(trigger);
+  (/** @type {HTMLElement} */ (node.querySelector(".bubble-content"))).prepend(trigger);
 
   node.classList.add("has-advertisement");
   trigger.addEventListener("click", () => { node.classList.remove("has-advertisement"); });
