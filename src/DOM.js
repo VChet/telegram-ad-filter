@@ -1,3 +1,5 @@
+// @ts-check
+
 export const bubbleStyle = `
   .bubble:not(.has-advertisement) .advertisement,
   .bubble.has-advertisement .bubble-content *:not(.advertisement),
@@ -46,7 +48,12 @@ export const popupStyle = `
   }
 `;
 
-export function addSettingsButton(node, callback) {
+/**
+ * @param {HTMLElement} element
+ * @param {Function} callback
+ * @returns {void}
+ */
+export function addSettingsButton(element, callback) {
   const settingsButton = document.createElement("button");
   settingsButton.classList.add("btn-icon", "rp");
   settingsButton.setAttribute("title", "Telegram Ad Filter Settings");
@@ -64,19 +71,24 @@ export function addSettingsButton(node, callback) {
     callback();
   });
 
-  node.append(settingsButton);
+  element.append(settingsButton);
 }
 
+/**
+ * @param {HTMLElement} node
+ * @param {string[]} adWords
+ * @returns {void}
+ */
 export function handleMessageNode(node, adWords) {
-  const message = node.querySelector(".message");
+  const message = (/** @type {HTMLElement} */ (node.querySelector(".message")));
   if (!message?.textContent || node.querySelector(".advertisement")) { return; }
-  const hasAdWord = adWords.some((filter) => message.textContent.toLowerCase().includes(filter.toLowerCase()));
+  const hasAdWord = adWords.some((filter) => message.textContent?.toLowerCase().includes(filter.toLowerCase()));
   if (!hasAdWord) { return; }
 
   const trigger = document.createElement("div");
   trigger.classList.add("advertisement");
-  trigger.textContent = "Hidden by filter";
-  node.querySelector(".bubble-content").prepend(trigger);
+  trigger.textContent = "Blocked Ad";
+  (/** @type {HTMLElement} */ (node.querySelector(".bubble-content"))).prepend(trigger);
 
   node.classList.add("has-advertisement");
   trigger.addEventListener("click", () => { node.classList.remove("has-advertisement"); });

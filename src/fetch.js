@@ -1,3 +1,8 @@
+// @ts-check
+
+/**
+ * @param {string | URL} url
+ */
 function isValidURL(url) {
   try {
     const parsedUrl = new URL(url);
@@ -7,6 +12,9 @@ function isValidURL(url) {
   }
 }
 
+/**
+ * @param {any} payload
+ */
 function isValidJSON(payload) {
   try {
     JSON.parse(payload);
@@ -16,12 +24,18 @@ function isValidJSON(payload) {
   }
 }
 
+/**
+ * @param {string | URL} url
+ */
 async function fetchAndParseJSON(url) {
   const content = await fetch(url).then((response) => response.text());
   if (!isValidJSON(content)) { throw new SyntaxError(`Invalid JSON: data from ${url}`); }
   return JSON.parse(content);
 }
 
+/**
+ * @param {string} urlsString
+ */
 export async function fetchLists(urlsString) {
   const urls = urlsString.split("\n").map((url) => url.trim()).filter(Boolean);
   const resultSet = new Set();

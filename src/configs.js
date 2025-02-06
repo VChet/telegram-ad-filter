@@ -1,3 +1,5 @@
+// @ts-check
+
 import { frameStyle, popupStyle } from "./DOM";
 
 export const settingsConfig = {

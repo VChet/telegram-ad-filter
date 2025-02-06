@@ -1,3 +1,5 @@
+// @ts-check
+
 import { addSettingsButton, bubbleStyle, handleMessageNode } from "./DOM";
 import { settingsConfig } from "./configs";
 import { fetchLists } from "./fetch";
@@ -21,8 +23,11 @@ import { fetchLists } from "./fetch";
     }
   });
 
+  /**
+   * @param {Node} node
+   */
   function walk(node) {
-    if (!node.nodeType) { return; }
+    if (!(node instanceof HTMLElement) || !node.nodeType) { return; }
     let child = null;
     let next = null;
     switch (node.nodeType) {
@@ -44,6 +49,9 @@ import { fetchLists } from "./fetch";
     }
   }
 
+  /**
+   * @param {MutationRecord[]} mutationRecords
+   */
   function mutationHandler(mutationRecords) {
     for (const { type, addedNodes } of mutationRecords) {
       if (type === "childList" && typeof addedNodes === "object" && addedNodes.length) {
