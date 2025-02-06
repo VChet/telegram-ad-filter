@@ -15,6 +15,7 @@
   },
   "scripts": {
     "preinstall": "npx only-allow pnpm",
+    "dev": "rollup -c -w",
     "build": "rollup -c",
     "lint:js": "eslint .",
     "lint:js:fix": "npm run lint:js -- --fix",
