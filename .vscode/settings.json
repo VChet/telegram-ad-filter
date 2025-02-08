@@ -47,5 +47,8 @@
     "scss",
     "pcss",
     "postcss"
-  ]
+  ],
+  "search.exclude": {
+    "**/*.user.js": true,
+  }
 }
