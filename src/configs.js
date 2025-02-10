@@ -7,7 +7,7 @@ export const settingsConfig = {
   title: "Telegram Ad Filter Settings",
   fields: {
     listUrls: {
-      label: "Blacklist URLs (one on each line)",
+      label: "Blacklist URLs (one per line) – each URL must be a publicly accessible JSON file containing an array of blocked words or phrases",
       type: "textarea",
       default: "https://raw.githubusercontent.com/VChet/telegram-ad-filter/master/blacklist.json"
     }
