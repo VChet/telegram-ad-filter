@@ -69,9 +69,9 @@ export function addSettingsButton(node, callback) {
 
 export function handleMessageNode(node, adWords) {
   const message = node.querySelector(".message");
-  if (!message?.textContent || node.querySelector(".advertisement")) return;
+  if (!message?.textContent || node.querySelector(".advertisement")) { return; }
   const hasAdWord = adWords.some((filter) => message.textContent.toLowerCase().includes(filter.toLowerCase()));
-  if (!hasAdWord) return;
+  if (!hasAdWord) { return; }
 
   const trigger = document.createElement("div");
   trigger.classList.add("advertisement");
