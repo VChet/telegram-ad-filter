@@ -23,7 +23,7 @@ async function fetchAndParseJSON(url) {
 }
 
 export async function fetchLists(urlsString) {
-  const urls = urlsString.trim().split("\n").map(url => url.trim()).filter(Boolean);
+  const urls = urlsString.split("\n").map((url) => url.trim()).filter(Boolean);
   const resultSet = new Set();
 
   for (const url of urls) {
@@ -34,8 +34,8 @@ export async function fetchLists(urlsString) {
     try {
       let parsedData = await fetchAndParseJSON(url);
       if (!Array.isArray(parsedData)) { throw new TypeError(`Invalid array: data from ${url}`); }
-      parsedData = parsedData.map(entry => entry.trim()).filter(Boolean);
-      for (const entry of parsedData) { resultSet.add(entry); }
+      parsedData = parsedData.map((entry) => entry.trim()).filter(Boolean);
+      for (const entry of parsedData) resultSet.add(entry);
     } catch (error) {
       if (error instanceof SyntaxError) { throw error; }
       throw new Error(`Fetch error: ${url}. Please check the URL or your network connection.`);
