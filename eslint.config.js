@@ -16,6 +16,8 @@ export default [
       globals: { GM_config: "readonly", ...globals.browser, ...globals.greasemonkey }
     },
     rules: {
+      "arrow-parens": ["error", "always"],
+      curly: ["error", "all"],
       "@stylistic/comma-dangle": ["error", "never"],
       "@stylistic/quotes": ["error", "double"],
       "@stylistic/semi": ["error", "always"],
