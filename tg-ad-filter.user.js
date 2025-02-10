@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Telegram Ad Filter
-// @version      1.2.0
+// @version      1.2.1
 // @description  Collapses messages that contain words from the ad-word list
 // @license      MIT
 // @author       VChet
@@ -91,13 +91,13 @@ function addSettingsButton(node, callback) {
 
 function handleMessageNode(node, adWords) {
   const message = node.querySelector(".message");
-  if (!message?.textContent || node.querySelector(".advertisement")) return;
+  if (!message?.textContent || node.querySelector(".advertisement")) { return; }
   const hasAdWord = adWords.some((filter) => message.textContent.toLowerCase().includes(filter.toLowerCase()));
-  if (!hasAdWord) return;
+  if (!hasAdWord) { return; }
 
   const trigger = document.createElement("div");
   trigger.classList.add("advertisement");
-  trigger.textContent = "Blocked Ad";
+  trigger.textContent = "Hidden by filter";
   node.querySelector(".bubble-content").prepend(trigger);
 
   node.classList.add("has-advertisement");
@@ -112,7 +112,7 @@ const settingsConfig = {
   title: "Telegram Ad Filter Settings",
   fields: {
     listUrls: {
-      label: "Blacklist URLs (one on each line)",
+      label: "Blacklist URLs (one per line) – each URL must be a publicly accessible JSON file containing an array of blocked words or phrases",
       type: "textarea",
       default: "https://raw.githubusercontent.com/VChet/telegram-ad-filter/master/blacklist.json"
     }
@@ -138,13 +138,13 @@ function isValidJSON(payload) {
 }
 
 async function fetchAndParseJSON(url) {
-  const content = await fetch(url).then(response => response.text());
+  const content = await fetch(url).then((response) => response.text());
   if (!isValidJSON(content)) { throw new SyntaxError(`Invalid JSON: data from ${url}`); }
   return JSON.parse(content);
 }
 
 async function fetchLists(urlsString) {
-  const urls = urlsString.trim().split("\n").map(url => url.trim()).filter(Boolean);
+  const urls = urlsString.split("\n").map((url) => url.trim()).filter(Boolean);
   const resultSet = new Set();
 
   for (const url of urls) {
@@ -155,7 +155,7 @@ async function fetchLists(urlsString) {
     try {
       let parsedData = await fetchAndParseJSON(url);
       if (!Array.isArray(parsedData)) { throw new TypeError(`Invalid array: data from ${url}`); }
-      parsedData = parsedData.map(entry => entry.trim()).filter(Boolean);
+      parsedData = parsedData.map((entry) => entry.trim()).filter(Boolean);
       for (const entry of parsedData) { resultSet.add(entry); }
     } catch (error) {
       if (error instanceof SyntaxError) { throw error; }
