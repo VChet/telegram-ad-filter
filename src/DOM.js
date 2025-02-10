@@ -75,7 +75,7 @@ export function handleMessageNode(node, adWords) {
 
   const trigger = document.createElement("div");
   trigger.classList.add("advertisement");
-  trigger.textContent = "Blocked Ad";
+  trigger.textContent = "Hidden by filter";
   node.querySelector(".bubble-content").prepend(trigger);
 
   node.classList.add("has-advertisement");
