@@ -55,7 +55,7 @@ export function addSettingsButton(node, callback) {
   ripple.classList.add("c-ripple");
   const icon = document.createElement("span");
   icon.classList.add("tgico", "button-icon");
-  icon.textContent = "\uE9F3";
+  icon.textContent = "\uEA1C";
   settingsButton.append(ripple);
   settingsButton.append(icon);
 
