@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Telegram Ad Filter
-// @version      1.2.1
+// @version      1.3.0
 // @description  Collapses messages that contain words from the ad-word list
 // @license      MIT
 // @author       VChet
@@ -77,7 +77,7 @@ function addSettingsButton(node, callback) {
   ripple.classList.add("c-ripple");
   const icon = document.createElement("span");
   icon.classList.add("tgico", "button-icon");
-  icon.textContent = "\uE9F3";
+  icon.textContent = "\uEA1C";
   settingsButton.append(ripple);
   settingsButton.append(icon);
 
@@ -91,9 +91,20 @@ function addSettingsButton(node, callback) {
 
 function handleMessageNode(node, adWords) {
   const message = node.querySelector(".message");
-  if (!message?.textContent || node.querySelector(".advertisement")) { return; }
-  const hasAdWord = adWords.some((filter) => message.textContent.toLowerCase().includes(filter.toLowerCase()));
-  if (!hasAdWord) { return; }
+  if (!message || node.querySelector(".advertisement")) { return; }
+
+  const textContent = message.textContent?.toLowerCase();
+  const links = [...message.querySelectorAll("a")].reduce((acc, { href }) => {
+    if (href) { acc.push(href.toLowerCase()); }
+    return acc;
+  }, []);
+  if (!textContent && !links.length) { return; }
+
+  const filters = adWords.map((filter) => filter.toLowerCase());
+  const hasMatch = filters.some((filter) =>
+    textContent.includes(filter) || links.some((href) => href.includes(filter))
+  );
+  if (!hasMatch) { return; }
 
   const trigger = document.createElement("div");
   trigger.classList.add("advertisement");
