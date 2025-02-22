@@ -11,8 +11,12 @@ import { fetchLists } from "./fetch";
     events: {
       init: async function() { adWords = await fetchLists(this.get("listUrls")); },
       save: async function() {
-        adWords = await fetchLists(this.get("listUrls"));
-        this.close();
+        try {
+          adWords = await fetchLists(this.get("listUrls"));
+          this.close();
+        } catch (error) {
+          alert(error.message);
+        }
       }
     }
   });
