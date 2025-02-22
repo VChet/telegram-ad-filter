@@ -16,17 +16,22 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "dev": "rollup -c -w",
-    "build": "rollup -c",
+    "build": "rollup -c && eslint --fix tg-ad-filter.user.js",
+    "lint:ts": "npx tsc --noEmit",
     "lint:js": "eslint .",
     "lint:js:fix": "npm run lint:js -- --fix",
+    "lint:all": "npm run lint:ts && npm run lint:js",
     "preversion": "npm run build",
     "version": "node src/bump.cjs"
   },
   "devDependencies": {
-    "eslint": "^9.20.0",
+    "@rollup/plugin-typescript": "^12.1.2",
+    "@types/tampermonkey": "^5.0.4",
+    "eslint": "^9.21.0",
     "eslint-plugin-userscripts": "^0.5.6",
-    "globals": "^15.14.0",
+    "globals": "^16.0.0",
     "neostandard": "^0.12.1",
-    "rollup": "^4.34.6"
+    "rollup": "^4.34.8",
+    "typescript": "^5.7.3"
   }
 }

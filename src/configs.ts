@@ -1,6 +1,6 @@
 import { frameStyle, popupStyle } from "./DOM";
 
-export const settingsConfig = {
+export const settingsConfig: InitOptions<"textarea"> = {
   id: "telegram-ad-filter",
   frameStyle,
   css: popupStyle,

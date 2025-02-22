@@ -13,7 +13,7 @@ export default [
   {
     languageOptions: {
       parserOptions: { ecmaVersion: "latest" },
-      globals: { GM_config: "readonly", ...globals.browser, ...globals.greasemonkey }
+      globals: { GM_configStruct: "readonly", ...globals.browser, ...globals.greasemonkey }
     },
     rules: {
       "arrow-parens": ["error", "always"],

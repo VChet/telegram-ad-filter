@@ -46,7 +46,7 @@ export const popupStyle = `
   }
 `;
 
-export function addSettingsButton(node, callback) {
+export function addSettingsButton(element: HTMLElement, callback: Function): void {
   const settingsButton = document.createElement("button");
   settingsButton.classList.add("btn-icon", "rp");
   settingsButton.setAttribute("title", "Telegram Ad Filter Settings");
@@ -64,15 +64,15 @@ export function addSettingsButton(node, callback) {
     callback();
   });
 
-  node.append(settingsButton);
+  element.append(settingsButton);
 }
 
-export function handleMessageNode(node, adWords) {
+export function handleMessageNode(node: HTMLElement, adWords: string[]): void {
   const message = node.querySelector(".message");
   if (!message || node.querySelector(".advertisement")) { return; }
 
   const textContent = message.textContent?.toLowerCase();
-  const links = [...message.querySelectorAll("a")].reduce((acc, { href }) => {
+  const links = [...message.querySelectorAll("a")].reduce((acc: string[], { href }) => {
     if (href) { acc.push(href.toLowerCase()); }
     return acc;
   }, []);
@@ -80,14 +80,14 @@ export function handleMessageNode(node, adWords) {
 
   const filters = adWords.map((filter) => filter.toLowerCase());
   const hasMatch = filters.some((filter) =>
-    textContent.includes(filter) || links.some((href) => href.includes(filter))
+    textContent?.includes(filter) || links.some((href) => href.includes(filter))
   );
   if (!hasMatch) { return; }
 
   const trigger = document.createElement("div");
   trigger.classList.add("advertisement");
   trigger.textContent = "Hidden by filter";
-  node.querySelector(".bubble-content").prepend(trigger);
+  node.querySelector(".bubble-content")?.prepend(trigger);
 
   node.classList.add("has-advertisement");
   trigger.addEventListener("click", () => { node.classList.remove("has-advertisement"); });
