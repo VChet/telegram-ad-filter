@@ -1,8 +1,10 @@
 import neostandard from "neostandard";
 import userscripts from "eslint-plugin-userscripts";
+import { defineConfig, globalIgnores } from "eslint/config";
 import globals from "globals";
 
-export default [
+export default defineConfig([
+  globalIgnores(["tg-ad-filter.user.js"]),
   ...neostandard(),
   {
     files: ["*.user.js"],
@@ -13,7 +15,7 @@ export default [
   {
     languageOptions: {
       parserOptions: { ecmaVersion: "latest" },
-      globals: { GM_config: "readonly", ...globals.browser, ...globals.greasemonkey }
+      globals: { GM_configStruct: "readonly", ...globals.browser, ...globals.greasemonkey }
     },
     rules: {
       "arrow-parens": ["error", "always"],
@@ -24,4 +26,4 @@ export default [
       "@stylistic/space-before-function-paren": ["error", "never"]
     }
   }
-];
+]);
