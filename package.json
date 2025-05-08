@@ -15,18 +15,22 @@
   },
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "dev": "rollup -c -w",
-    "build": "rollup -c",
+    "dev": "node watch.js",
+    "build": "node build.js",
+    "lint:ts": "npx tsc --noEmit",
     "lint:js": "eslint .",
     "lint:js:fix": "npm run lint:js -- --fix",
+    "lint:all": "npm run lint:ts && npm run lint:js",
     "preversion": "npm run build",
     "version": "node src/bump.cjs"
   },
   "devDependencies": {
-    "eslint": "^9.20.0",
+    "@types/tampermonkey": "^5.0.4",
+    "esbuild": "^0.25.2",
+    "eslint": "^9.24.0",
     "eslint-plugin-userscripts": "^0.5.6",
-    "globals": "^15.14.0",
+    "globals": "^16.0.0",
     "neostandard": "^0.12.1",
-    "rollup": "^4.34.6"
+    "typescript": "^5.8.3"
   }
 }

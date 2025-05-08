@@ -20,7 +20,9 @@
 
 /* jshint esversion: 11 */
 
-const bubbleStyle = `
+
+// src/DOM.ts
+var bubbleStyle = `
   .bubble:not(.has-advertisement) .advertisement,
   .bubble.has-advertisement .bubble-content *:not(.advertisement),
   .bubble.has-advertisement .reply-markup {
@@ -36,8 +38,7 @@ const bubbleStyle = `
     color: var(--link-color);
   }
 `;
-
-const frameStyle = `
+var frameStyle = `
   inset: 115px auto auto 130px;
   border: 1px solid rgb(0, 0, 0);
   height: 300px;
@@ -52,8 +53,7 @@ const frameStyle = `
   z-index: 9999;
   display: block;
 `;
-
-const popupStyle = `
+var popupStyle = `
   #telegram-ad-filter {
     background: #181818;
     color: #ffffff;
@@ -67,12 +67,10 @@ const popupStyle = `
     color: inherit;
   }
 `;
-
-function addSettingsButton(node, callback) {
+function addSettingsButton(element, callback) {
   const settingsButton = document.createElement("button");
   settingsButton.classList.add("btn-icon", "rp");
   settingsButton.setAttribute("title", "Telegram Ad Filter Settings");
-
   const ripple = document.createElement("div");
   ripple.classList.add("c-ripple");
   const icon = document.createElement("span");
@@ -80,65 +78,74 @@ function addSettingsButton(node, callback) {
   icon.textContent = "\uEA1C";
   settingsButton.append(ripple);
   settingsButton.append(icon);
-
   settingsButton.addEventListener("click", (event) => {
     event.stopPropagation();
     callback();
   });
-
-  node.append(settingsButton);
+  element.append(settingsButton);
 }
-
 function handleMessageNode(node, adWords) {
   const message = node.querySelector(".message");
-  if (!message || node.querySelector(".advertisement")) { return; }
-
+  if (!message || node.querySelector(".advertisement")) {
+    return;
+  }
   const textContent = message.textContent?.toLowerCase();
   const links = [...message.querySelectorAll("a")].reduce((acc, { href }) => {
-    if (href) { acc.push(href.toLowerCase()); }
+    if (href) {
+      acc.push(href.toLowerCase());
+    }
     return acc;
   }, []);
-  if (!textContent && !links.length) { return; }
-
+  if (!textContent && !links.length) {
+    return;
+  }
   const filters = adWords.map((filter) => filter.toLowerCase());
-  const hasMatch = filters.some((filter) =>
-    textContent.includes(filter) || links.some((href) => href.includes(filter))
+  const hasMatch = filters.some(
+    (filter) => textContent?.includes(filter) || links.some((href) => href.includes(filter))
   );
-  if (!hasMatch) { return; }
-
+  if (!hasMatch) {
+    return;
+  }
   const trigger = document.createElement("div");
   trigger.classList.add("advertisement");
   trigger.textContent = "Hidden by filter";
-  node.querySelector(".bubble-content").prepend(trigger);
-
+  node.querySelector(".bubble-content")?.prepend(trigger);
   node.classList.add("has-advertisement");
-  trigger.addEventListener("click", () => { node.classList.remove("has-advertisement"); });
-  message.addEventListener("click", () => { node.classList.add("has-advertisement"); });
+  trigger.addEventListener("click", () => {
+    node.classList.remove("has-advertisement");
+  });
+  message.addEventListener("click", () => {
+    node.classList.add("has-advertisement");
+  });
 }
 
-const settingsConfig = {
+// src/configs.ts
+var settingsConfig = {
   id: "telegram-ad-filter",
   frameStyle,
   css: popupStyle,
   title: "Telegram Ad Filter Settings",
   fields: {
     listUrls: {
-      label: "Blacklist URLs (one per line) – each URL must be a publicly accessible JSON file containing an array of blocked words or phrases",
+      label: "Blacklist URLs (one per line) \u2013 each URL must be a publicly accessible JSON file containing an array of blocked words or phrases",
       type: "textarea",
       default: "https://raw.githubusercontent.com/VChet/telegram-ad-filter/master/blacklist.json"
     }
   }
 };
 
-function isValidURL(url) {
+// src/fetch.ts
+function isValidURL(payload) {
   try {
-    const parsedUrl = new URL(url);
+    if (typeof payload !== "string") {
+      return false;
+    }
+    const parsedUrl = new URL(payload);
     return parsedUrl.protocol === "http:" || parsedUrl.protocol === "https:";
   } catch {
     return false;
   }
 }
-
 function isValidJSON(payload) {
   try {
     JSON.parse(payload);
@@ -147,65 +154,77 @@ function isValidJSON(payload) {
     return false;
   }
 }
-
 async function fetchAndParseJSON(url) {
   const content = await fetch(url).then((response) => response.text());
-  if (!isValidJSON(content)) { throw new SyntaxError(`Invalid JSON: data from ${url}`); }
+  if (!isValidJSON(content)) {
+    throw new SyntaxError(`Invalid JSON: data from ${url}`);
+  }
   return JSON.parse(content);
 }
-
 async function fetchLists(urlsString) {
   const urls = urlsString.split("\n").map((url) => url.trim()).filter(Boolean);
-  const resultSet = new Set();
-
+  const resultSet = /* @__PURE__ */ new Set();
   for (const url of urls) {
     if (!isValidURL(url)) {
       throw new URIError(`Invalid URL: ${url}. Please ensure it leads to an online source like GitHub, Gist, Pastebin, etc.`);
     }
-
     try {
       let parsedData = await fetchAndParseJSON(url);
-      if (!Array.isArray(parsedData)) { throw new TypeError(`Invalid array: data from ${url}`); }
-      parsedData = parsedData.map((entry) => entry.trim()).filter(Boolean);
-      for (const entry of parsedData) { resultSet.add(entry); }
+      if (!Array.isArray(parsedData)) {
+        throw new TypeError(`Invalid array: data from ${url}`);
+      }
+      const strings = parsedData.filter((entry) => typeof entry === "string").map((entry) => entry.trim()).filter(Boolean);
+      for (const string of strings) {
+        resultSet.add(string);
+      }
     } catch (error) {
-      if (error instanceof SyntaxError) { throw error; }
+      if (error instanceof SyntaxError) {
+        throw error;
+      }
       throw new Error(`Fetch error: ${url}. Please check the URL or your network connection.`);
     }
   }
-
   return [...resultSet];
 }
 
-(async() => {
+// src/main.ts
+(async () => {
   GM_addStyle(bubbleStyle);
-
   let adWords = [];
-  const gmc = new GM_config({
+  const gmc = new GM_configStruct({
     ...settingsConfig,
     events: {
-      init: async function() { adWords = await fetchLists(this.get("listUrls")); },
+      init: async function() {
+        adWords = await fetchLists(this.get("listUrls").toString());
+      },
       save: async function() {
         try {
-          adWords = await fetchLists(this.get("listUrls"));
+          adWords = await fetchLists(this.get("listUrls").toString());
           this.close();
         } catch (error) {
-          alert(error.message);
+          alert(error instanceof Error ? error.message : String(error));
         }
       }
     }
   });
-
   function walk(node) {
-    if (!node.nodeType) { return; }
+    if (!(node instanceof HTMLElement) || !node.nodeType) {
+      return;
+    }
     let child = null;
     let next = null;
     switch (node.nodeType) {
-      case 1: // Element
-      case 9: // Document
-      case 11: // Document fragment
-        if (node.matches(".chat-utils")) { addSettingsButton(node, () => { gmc.open(); }); }
-        if (node.matches(".bubble")) { handleMessageNode(node, adWords); }
+      case node.ELEMENT_NODE:
+      case node.DOCUMENT_NODE:
+      case node.DOCUMENT_FRAGMENT_NODE:
+        if (node.matches(".chat-utils")) {
+          addSettingsButton(node, () => {
+            gmc.open();
+          });
+        }
+        if (node.matches(".bubble")) {
+          handleMessageNode(node, adWords);
+        }
         child = node.firstChild;
         while (child) {
           next = child.nextSibling;
@@ -213,17 +232,20 @@ async function fetchLists(urlsString) {
           child = next;
         }
         break;
+      case node.TEXT_NODE:
+      default:
+        break;
     }
   }
-
   function mutationHandler(mutationRecords) {
     for (const { type, addedNodes } of mutationRecords) {
       if (type === "childList" && typeof addedNodes === "object" && addedNodes.length) {
-        for (const node of addedNodes) { walk(node); }
+        for (const node of addedNodes) {
+          walk(node);
+        }
       }
     }
   }
-
   const observer = new MutationObserver(mutationHandler);
   observer.observe(document, { childList: true, subtree: true, attributeFilter: ["class"] });
 })();
