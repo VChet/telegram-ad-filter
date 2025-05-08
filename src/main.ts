@@ -1,34 +1,34 @@
-import { addSettingsButton, bubbleStyle, handleMessageNode } from "./DOM";
+import { addSettingsButton, globalStyles, handleMessageNode } from "./DOM";
 import { settingsConfig } from "./configs";
 import { fetchLists } from "./fetch";
 
 (async() => {
-  GM_addStyle(bubbleStyle);
+  GM_addStyle(globalStyles);
 
-  let adWords = [];
-  const gmc = new GM_config({
+  let adWords: string[] = [];
+  const gmc = new GM_configStruct({
     ...settingsConfig,
     events: {
-      init: async function() { adWords = await fetchLists(this.get("listUrls")); },
+      init: async function() { adWords = await fetchLists(this.get("listUrls").toString()); },
       save: async function() {
         try {
-          adWords = await fetchLists(this.get("listUrls"));
+          adWords = await fetchLists(this.get("listUrls").toString());
           this.close();
         } catch (error) {
-          alert(error.message);
+          alert(error instanceof Error ? error.message : String(error));
         }
       }
     }
   });
 
-  function walk(node) {
-    if (!node.nodeType) { return; }
+  function walk(node: Node): void {
+    if (!(node instanceof HTMLElement) || !node.nodeType) { return; }
     let child = null;
     let next = null;
     switch (node.nodeType) {
-      case 1: // Element
-      case 9: // Document
-      case 11: // Document fragment
+      case node.ELEMENT_NODE:
+      case node.DOCUMENT_NODE:
+      case node.DOCUMENT_FRAGMENT_NODE:
         if (node.matches(".chat-utils")) { addSettingsButton(node, () => { gmc.open(); }); }
         if (node.matches(".bubble")) { handleMessageNode(node, adWords); }
         child = node.firstChild;
@@ -38,13 +38,13 @@ import { fetchLists } from "./fetch";
           child = next;
         }
         break;
-      case 3: // Text node
+      case node.TEXT_NODE:
       default:
         break;
     }
   }
 
-  function mutationHandler(mutationRecords) {
+  function mutationHandler(mutationRecords: MutationRecord[]): void {
     for (const { type, addedNodes } of mutationRecords) {
       if (type === "childList" && typeof addedNodes === "object" && addedNodes.length) {
         for (const node of addedNodes) { walk(node); }
