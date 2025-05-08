@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Telegram Ad Filter
-// @version      1.3.0
+// @version      1.4.0
 // @description  Collapses messages that contain words from the ad-word list
 // @license      MIT
 // @author       VChet
@@ -22,7 +22,7 @@
 
 
 // src/DOM.ts
-var bubbleStyle = `
+var globalStyles = `
   .bubble:not(.has-advertisement) .advertisement,
   .bubble.has-advertisement .bubble-content *:not(.advertisement),
   .bubble.has-advertisement .reply-markup {
@@ -36,6 +36,14 @@ var bubbleStyle = `
     font-size: var(--messages-text-size);
     font-weight: var(--font-weight-bold);
     color: var(--link-color);
+  }
+  #telegram-ad-filter-settings {
+    display: inline-flex;
+    justify-content: center;
+    width: 24px;
+    font-size: 24px;
+    color: transparent;
+    text-shadow: 0 0 var(--secondary-text-color);
   }
 `;
 var frameStyle = `
@@ -74,8 +82,8 @@ function addSettingsButton(element, callback) {
   const ripple = document.createElement("div");
   ripple.classList.add("c-ripple");
   const icon = document.createElement("span");
-  icon.classList.add("tgico", "button-icon");
-  icon.textContent = "\uEA1C";
+  icon.id = "telegram-ad-filter-settings";
+  icon.textContent = "\u2699\uFE0F";
   settingsButton.append(ripple);
   settingsButton.append(icon);
   settingsButton.addEventListener("click", (event) => {
@@ -189,7 +197,7 @@ async function fetchLists(urlsString) {
 
 // src/main.ts
 (async () => {
-  GM_addStyle(bubbleStyle);
+  GM_addStyle(globalStyles);
   let adWords = [];
   const gmc = new GM_configStruct({
     ...settingsConfig,
