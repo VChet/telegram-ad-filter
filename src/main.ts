@@ -1,9 +1,9 @@
-import { addSettingsButton, bubbleStyle, handleMessageNode } from "./DOM";
+import { addSettingsButton, globalStyles, handleMessageNode } from "./DOM";
 import { settingsConfig } from "./configs";
 import { fetchLists } from "./fetch";
 
 (async() => {
-  GM_addStyle(bubbleStyle);
+  GM_addStyle(globalStyles);
 
   let adWords: string[] = [];
   const gmc = new GM_configStruct({

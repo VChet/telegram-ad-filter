@@ -1,4 +1,4 @@
-export const bubbleStyle = `
+export const globalStyles = `
   .bubble:not(.has-advertisement) .advertisement,
   .bubble.has-advertisement .bubble-content *:not(.advertisement),
   .bubble.has-advertisement .reply-markup {
@@ -12,6 +12,14 @@ export const bubbleStyle = `
     font-size: var(--messages-text-size);
     font-weight: var(--font-weight-bold);
     color: var(--link-color);
+  }
+  #telegram-ad-filter-settings {
+    display: inline-flex;
+    justify-content: center;
+    width: 24px;
+    font-size: 24px;
+    color: transparent;
+    text-shadow: 0 0 var(--secondary-text-color);
   }
 `;
 
@@ -54,8 +62,8 @@ export function addSettingsButton(element: HTMLElement, callback: Function): voi
   const ripple = document.createElement("div");
   ripple.classList.add("c-ripple");
   const icon = document.createElement("span");
-  icon.classList.add("tgico", "button-icon");
-  icon.textContent = "\uEA1C";
+  icon.id = "telegram-ad-filter-settings";
+  icon.textContent = "⚙️";
   settingsButton.append(ripple);
   settingsButton.append(icon);
 
