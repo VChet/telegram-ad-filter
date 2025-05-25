@@ -15,7 +15,7 @@ export default defineConfig([
   {
     languageOptions: {
       parserOptions: { ecmaVersion: "latest" },
-      globals: { GM_configStruct: "readonly", ...globals.browser, ...globals.greasemonkey }
+      globals: { ...globals.browser, ...globals.greasemonkey }
     },
     rules: {
       "arrow-parens": ["error", "always"],
