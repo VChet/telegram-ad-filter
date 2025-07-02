@@ -33,7 +33,7 @@ export async function fetchLists(urlsString: string): Promise<string[]> {
     }
 
     try {
-      let parsedData = await fetchAndParseJSON(url);
+      const parsedData = await fetchAndParseJSON(url);
       if (!Array.isArray(parsedData)) { throw new TypeError(`Invalid array: data from ${url}`); }
 
       const strings: string[] = parsedData

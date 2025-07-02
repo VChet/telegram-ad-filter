@@ -3,6 +3,7 @@
 [![version](https://img.shields.io/github/tag/VChet/telegram-ad-filter.svg?label=version)](https://github.com/VChet/telegram-ad-filter/tags)
 [![neostandard javascript style](https://img.shields.io/badge/code_style-neostandard-7fffff?style=flat)](https://github.com/neostandard/neostandard)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/VChet/telegram-ad-filter)
 
 UserScript for [Telegram WebK](https://web.telegram.org/k/) that minimizes messages containing words from the [ad-word list](https://github.com/VChet/telegram-ad-filter/blob/master/blacklist.json).
 
@@ -22,6 +23,10 @@ UserScript for [Telegram WebK](https://web.telegram.org/k/) that minimizes messa
 ## Contribute
 
 If you have any ideas, bug reports, or feature requests, feel free to [contribute](https://github.com/VChet/telegram-ad-filter/pulls) or report [issues](https://github.com/VChet/telegram-ad-filter/issues).
+
+## Documentation
+
+- [DeepWiki](https://deepwiki.com/VChet/telegram-ad-filter/7-contributing)
 
 ## Development
 

@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Telegram Ad Filter
-// @version      1.4.0
+// @version      1.4.1
 // @description  Collapses messages that contain words from the ad-word list
 // @license      MIT
 // @author       VChet
@@ -177,7 +177,7 @@ async function fetchLists(urlsString) {
       throw new URIError(`Invalid URL: ${url}. Please ensure it leads to an online source like GitHub, Gist, Pastebin, etc.`);
     }
     try {
-      let parsedData = await fetchAndParseJSON(url);
+      const parsedData = await fetchAndParseJSON(url);
       if (!Array.isArray(parsedData)) {
         throw new TypeError(`Invalid array: data from ${url}`);
       }
