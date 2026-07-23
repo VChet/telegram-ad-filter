@@ -6,7 +6,7 @@ module.exports = {
     { filename: "src/meta.txt", updater: "src/meta-updater.js" }
   ],
   scripts: {
-    prerelease: "npm run lint:all"
+    prerelease: "npm run lint:all && npm run build"
   },
   writerOpts: {
     finalizeContext(context) {
