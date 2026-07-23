@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## 1.5.1 (2026-07-23)
+
+### Bug Fixes
+
+* **popup:** fix version ([922bd86](https://github.com/VChet/telegram-ad-filter/commit/922bd869eb1d394a238d4c616b4a27008f327fe0))
+
 ## 1.5.0 (2026-07-23)
 
 ### Features
