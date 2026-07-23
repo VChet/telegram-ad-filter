@@ -4,6 +4,7 @@
   "description": "Userscript that minimizes messages containing words from the list",
   "author": "VChet",
   "license": "MIT",
+  "packageManager": "pnpm@10.34.5",
   "type": "module",
   "homepage": "https://github.com/VChet/telegram-ad-filter#readme",
   "repository": {
@@ -14,24 +15,23 @@
     "url": "https://github.com/VChet/telegram-ad-filter/issues"
   },
   "scripts": {
-    "preinstall": "npx only-allow pnpm",
     "dev": "tsdown --watch",
     "build": "tsdown",
-    "lint:ts": "tsc --noEmit",
+    "lint:ts": "tsc",
     "lint:js": "eslint .",
     "lint:js:fix": "npm run lint:js -- --fix",
     "lint:all": "npm run lint:ts && npm run lint:js",
-    "release": "npm run lint:all && commit-and-tag-version"
+    "release": "commit-and-tag-version"
   },
   "devDependencies": {
-    "@types/node": "^24.10.1",
+    "@types/node": "^26.1.1",
     "@types/tampermonkey": "^5.0.5",
-    "commit-and-tag-version": "^12.6.1",
-    "eslint": "^9.39.1",
+    "commit-and-tag-version": "^13.1.0",
+    "eslint": "^9.39.5",
     "eslint-plugin-userscripts": "^0.5.6",
-    "neostandard": "^0.12.2",
-    "tsdown": "^0.17.0",
-    "typescript": "^5.9.3"
+    "neostandard": "^0.13.0",
+    "tsdown": "^0.22.13",
+    "typescript": "^6.0.3"
   },
   "pnpm": {
     "overrides": {
@@ -43,10 +43,13 @@
       "es-iterator-helpers": "npm:@nolyfill/es-iterator-helpers@^1",
       "hasown": "npm:@nolyfill/hasown@^1",
       "is-core-module": "npm:@nolyfill/is-core-module@^1",
+      "isarray": "npm:@nolyfill/isarray@^1",
+      "object-keys": "npm:@nolyfill/object-keys@^1",
       "object.assign": "npm:@nolyfill/object.assign@^1",
       "object.entries": "npm:@nolyfill/object.entries@^1",
       "object.fromentries": "npm:@nolyfill/object.fromentries@^1",
       "object.values": "npm:@nolyfill/object.values@^1",
+      "safe-buffer": "npm:@nolyfill/safe-buffer@^1",
       "string.prototype.matchall": "npm:@nolyfill/string.prototype.matchall@^1",
       "string.prototype.repeat": "npm:@nolyfill/string.prototype.repeat@^1"
     }

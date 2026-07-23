@@ -1,14 +1,13 @@
 {
   "compilerOptions": {
-    "target": "esnext",
-    "module": "preserve",
+    "target": "ESNext",
+    "lib": ["ESNext", "DOM"],
+    "moduleResolution": "bundler",
     "types": ["node", "tampermonkey"],
-    "strict": true,
     "noUnusedLocals": true,
-    "declaration": true,
-    "emitDeclarationOnly": true,
-    "esModuleInterop": true,
-    "isolatedModules": true,
+    "noUnusedParameters": true,
+    "importHelpers": true,
+    "noEmit": true,
     "verbatimModuleSyntax": true,
     "skipLibCheck": true
   },

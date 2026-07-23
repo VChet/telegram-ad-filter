@@ -20,7 +20,6 @@
 
 /* jshint esversion: 11 */
 
-
 //#region src/DOM.ts
 const globalStyles = `
   .bubble:not(.has-advertisement) .advertisement,
@@ -114,7 +113,6 @@ function handleMessageNode(node, adWords) {
 		node.classList.add("has-advertisement");
 	});
 }
-
 //#endregion
 //#region src/configs.ts
 const settingsConfig = {
@@ -128,7 +126,6 @@ const settingsConfig = {
 		default: "https://raw.githubusercontent.com/VChet/telegram-ad-filter/master/blacklist.json"
 	} }
 };
-
 //#endregion
 //#region src/fetch.ts
 function isValidURL(payload) {
@@ -170,7 +167,6 @@ async function fetchLists(urlsString) {
 	}
 	return [...resultSet];
 }
-
 //#endregion
 //#region src/main.ts
 (async () => {
@@ -224,5 +220,4 @@ async function fetchLists(urlsString) {
 		attributeFilter: ["class"]
 	});
 })();
-
 //#endregion
