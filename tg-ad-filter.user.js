@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Telegram Ad Filter
-// @version      1.4.2
+// @version      1.5.0
 // @description  Collapses messages that contain words from the ad-word list
 // @license      MIT
 // @author       VChet
@@ -20,22 +20,16 @@
 
 /* jshint esversion: 11 */
 
-
 //#region src/DOM.ts
 const globalStyles = `
-  .bubble:not(.has-advertisement) .advertisement,
-  .bubble.has-advertisement .bubble-content *:not(.advertisement),
-  .bubble.has-advertisement .reply-markup {
-    display: none;
-  }
   .advertisement {
     padding: 0.5rem 1rem;
-    cursor: pointer;
-    white-space: nowrap;
-    font-style: italic;
     font-size: var(--messages-text-size);
+    font-style: italic;
     font-weight: var(--font-weight-bold);
     color: var(--link-color);
+    white-space: nowrap;
+    cursor: pointer;
   }
   #telegram-ad-filter-settings {
     display: inline-flex;
@@ -45,11 +39,19 @@ const globalStyles = `
     color: transparent;
     text-shadow: 0 0 var(--secondary-text-color);
   }
+  .bubble.is-sponsored {
+    display: none;
+  }
+  .bubble:not(.has-advertisement) .advertisement,
+  .bubble.has-advertisement .bubble-content *:not(.advertisement),
+  .bubble.has-advertisement .reply-markup {
+    display: none;
+  }
 `;
 const frameStyle = `
   inset: 115px auto auto 130px;
-  border: 1px solid rgb(0, 0, 0);
-  height: 300px;
+  border: none;
+  height: 325px;
   margin: 0px;
   max-height: 95%;
   max-width: 95%;
@@ -63,15 +65,24 @@ const frameStyle = `
 `;
 const popupStyle = `
   #telegram-ad-filter {
+    color: #fff;
     background: #181818;
-    color: #ffffff;
+    a {
+      color: inherit;
+    }
+    textarea {
+      width: 100%;
+      min-height: 150px;
+      resize: vertical;
+    }
+    .subtitle {
+      margin-block: 4px;
+      font-size: 12px;
+    }
   }
-  #telegram-ad-filter textarea {
-    resize: vertical;
-    width: 100%;
-    min-height: 150px;
-  }
-  #telegram-ad-filter .reset, #telegram-ad-filter .reset a, #telegram-ad-filter_buttons_holder {
+  #telegram-ad-filter .reset,
+  #telegram-ad-filter .reset a,
+  #telegram-ad-filter_buttons_holder {
     color: inherit;
   }
 `;
@@ -114,21 +125,32 @@ function handleMessageNode(node, adWords) {
 		node.classList.add("has-advertisement");
 	});
 }
-
+//#endregion
+//#region package.json
+var version = "1.4.2";
 //#endregion
 //#region src/configs.ts
+const title = document.createElement("div");
+title.innerHTML = `
+  Telegram Ad Filter Settings
+  <p class="subtitle">
+    <a href="https://github.com/VChet/telegram-ad-filter/releases" target="_blank">v${version}</a>
+  </p>
+  <p class="subtitle">
+    Suggest new words to filter in the <a href="https://github.com/VChet/telegram-ad-filter/discussions" target="_blank">discussions</a>.
+  </p>
+`;
 const settingsConfig = {
 	id: "telegram-ad-filter",
 	frameStyle,
 	css: popupStyle,
-	title: "Telegram Ad Filter Settings",
+	title,
 	fields: { listUrls: {
 		label: "Blacklist URLs (one per line) – each URL must be a publicly accessible JSON file containing an array of blocked words or phrases",
 		type: "textarea",
 		default: "https://raw.githubusercontent.com/VChet/telegram-ad-filter/master/blacklist.json"
 	} }
 };
-
 //#endregion
 //#region src/fetch.ts
 function isValidURL(payload) {
@@ -170,9 +192,8 @@ async function fetchLists(urlsString) {
 	}
 	return [...resultSet];
 }
-
 //#endregion
-//#region src/main.ts
+//#region src/index.ts
 (async () => {
 	GM_addStyle(globalStyles);
 	let adWords = [];
@@ -224,5 +245,4 @@ async function fetchLists(urlsString) {
 		attributeFilter: ["class"]
 	});
 })();
-
 //#endregion

@@ -5,6 +5,9 @@ module.exports = {
     { filename: "tg-ad-filter.user.js", updater: "src/meta-updater.js" },
     { filename: "src/meta.txt", updater: "src/meta-updater.js" }
   ],
+  scripts: {
+    prerelease: "npm run lint:all && npm run build"
+  },
   writerOpts: {
     finalizeContext(context) {
       if (!context.commitGroups?.length) {

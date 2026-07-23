@@ -1,17 +1,12 @@
 export const globalStyles = `
-  .bubble:not(.has-advertisement) .advertisement,
-  .bubble.has-advertisement .bubble-content *:not(.advertisement),
-  .bubble.has-advertisement .reply-markup {
-    display: none;
-  }
   .advertisement {
     padding: 0.5rem 1rem;
-    cursor: pointer;
-    white-space: nowrap;
-    font-style: italic;
     font-size: var(--messages-text-size);
+    font-style: italic;
     font-weight: var(--font-weight-bold);
     color: var(--link-color);
+    white-space: nowrap;
+    cursor: pointer;
   }
   #telegram-ad-filter-settings {
     display: inline-flex;
@@ -21,12 +16,20 @@ export const globalStyles = `
     color: transparent;
     text-shadow: 0 0 var(--secondary-text-color);
   }
+  .bubble.is-sponsored {
+    display: none;
+  }
+  .bubble:not(.has-advertisement) .advertisement,
+  .bubble.has-advertisement .bubble-content *:not(.advertisement),
+  .bubble.has-advertisement .reply-markup {
+    display: none;
+  }
 `;
 
 export const frameStyle = `
   inset: 115px auto auto 130px;
-  border: 1px solid rgb(0, 0, 0);
-  height: 300px;
+  border: none;
+  height: 325px;
   margin: 0px;
   max-height: 95%;
   max-width: 95%;
@@ -41,15 +44,24 @@ export const frameStyle = `
 
 export const popupStyle = `
   #telegram-ad-filter {
+    color: #fff;
     background: #181818;
-    color: #ffffff;
+    a {
+      color: inherit;
+    }
+    textarea {
+      width: 100%;
+      min-height: 150px;
+      resize: vertical;
+    }
+    .subtitle {
+      margin-block: 4px;
+      font-size: 12px;
+    }
   }
-  #telegram-ad-filter textarea {
-    resize: vertical;
-    width: 100%;
-    min-height: 150px;
-  }
-  #telegram-ad-filter .reset, #telegram-ad-filter .reset a, #telegram-ad-filter_buttons_holder {
+  #telegram-ad-filter .reset,
+  #telegram-ad-filter .reset a,
+  #telegram-ad-filter_buttons_holder {
     color: inherit;
   }
 `;
