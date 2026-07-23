@@ -1,4 +1,7 @@
 export const globalStyles = `
+  .bubble.is-sponsored {
+    display: none;
+  }
   .bubble:not(.has-advertisement) .advertisement,
   .bubble.has-advertisement .bubble-content *:not(.advertisement),
   .bubble.has-advertisement .reply-markup {
