@@ -233,7 +233,6 @@ async function fetchLists(urlsString) {
 				}
 				break;
 			case node.TEXT_NODE:
-			default: break;
 		}
 	}
 	function mutationHandler(mutationRecords) {

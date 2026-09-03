@@ -2,15 +2,15 @@ import { addSettingsButton, globalStyles, handleMessageNode } from "./DOM";
 import { settingsConfig } from "./configs";
 import { fetchLists } from "./fetch";
 
-(async() => {
+(async () => {
   GM_addStyle(globalStyles);
 
   let adWords: string[] = [];
   const gmc = new GM_configStruct({
     ...settingsConfig,
     events: {
-      init: async function() { adWords = await fetchLists(this.get("listUrls").toString()); },
-      save: async function() {
+      init: async function () { adWords = await fetchLists(this.get("listUrls").toString()); },
+      save: async function () {
         try {
           adWords = await fetchLists(this.get("listUrls").toString());
           this.close();
